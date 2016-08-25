@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void contextMenuEvent(QContextMenuEvent *event);
     ~MainWindow();
 
 private:

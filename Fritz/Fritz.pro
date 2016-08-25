@@ -14,9 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    configwindow.cpp
+    configwindow.cpp \
+    aboutbox.cpp
 
 HEADERS  += mainwindow.h \
-    configwindow.h
+    configwindow.h \
+    aboutbox.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    aboutbox.ui \
+    configwindow.ui
