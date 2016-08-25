@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>462</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>320</width>
+    <height>462</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>320</width>
+    <height>462</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>324</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="leftMargin">
+      <number>32</number>
+     </property>
+     <property name="topMargin">
+      <number>14</number>
+     </property>
+     <property name="rightMargin">
+      <number>12</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>10</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>8</number>
+     </property>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="pushButton_10">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/cm.png</normaloff>:/cm.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="btnForward">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string notr="true"/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/forward.png</normaloff>:/forward.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QPushButton" name="pushButton_16">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/right.png</normaloff>:/right.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QPushButton" name="pushButton_9">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/alarm.png</normaloff>:/alarm.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="4">
+      <widget class="QPushButton" name="pushButton_13">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/tick.png</normaloff>:/tick.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/down.png</normaloff>:/down.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="4">
+      <widget class="QPushButton" name="pushButton_14">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/test.png</normaloff>:/test.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4">
+      <widget class="QPushButton" name="pushButton_11">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/ce.png</normaloff>:/ce.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="4">
+      <widget class="QPushButton" name="pushButton_12">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/x2.png</normaloff>:/x2.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/park.png</normaloff>:/park.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="4">
+      <widget class="QPushButton" name="pushButton_8">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/go.png</normaloff>:/go.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/8.png</normaloff>:/8.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/7.png</normaloff>:/7.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="3">
+      <widget class="QPushButton" name="pushButton_7">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/6.png</normaloff>:/6.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="2">
+      <widget class="QPushButton" name="pushButton_17">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/5.png</normaloff>:/5.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QPushButton" name="pushButton_18">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/4.png</normaloff>:/4.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QPushButton" name="pushButton_19">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/1.png</normaloff>:/1.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="2">
+      <widget class="QPushButton" name="pushButton_20">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/2.png</normaloff>:/2.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="3">
+      <widget class="QPushButton" name="pushButton_21">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/3.png</normaloff>:/3.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="2">
+      <widget class="QPushButton" name="pushButton_22">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/0.png</normaloff>:/0.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="3">
+      <widget class="QPushButton" name="pushButton_23">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/out.png</normaloff>:/out.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btnPair">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/pairoff.png</normaloff>
+         <normalon>:/pair.png</normalon>:/pairoff.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="btntLeft">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/left.png</normaloff>:/left.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QPushButton" name="pushButton_24">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/in.png</normaloff>:/in.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3">
+      <widget class="QPushButton" name="pushButton_15">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/9.png</normaloff>:/9.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>58</width>
+         <height>54</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>320</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
+ <connections/>
+</ui>

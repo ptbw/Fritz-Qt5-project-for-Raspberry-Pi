@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>KeyPadBackground.png</file>
+        <file>down.png</file>
+        <file>forward.png</file>
+        <file>left.png</file>
+        <file>park.png</file>
+        <file>right.png</file>
+        <file>pair.png</file>
+        <file>pairoff.png</file>
+        <file>0.png</file>
+        <file>1.png</file>
+        <file>2.png</file>
+        <file>3.png</file>
+        <file>4.png</file>
+        <file>5.png</file>
+        <file>6.png</file>
+        <file>7.png</file>
+        <file>8.png</file>
+        <file>9.png</file>
+        <file>alarm.png</file>
+        <file>ce.png</file>
+        <file>cm.png</file>
+        <file>go.png</file>
+        <file>in.png</file>
+        <file>out.png</file>
+        <file>test.png</file>
+        <file>tick.png</file>
+        <file>x2.png</file>
+    </qresource>
+</RCC>
