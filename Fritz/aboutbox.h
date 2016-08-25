@@ -1,17 +1,27 @@
 #ifndef ABOUTBOX_H
 #define ABOUTBOX_H
 
-#include <QMainWindow>
+#include <QDialog>
 
-class aboutbox : public QMainWindow
+namespace Ui {
+class AboutBox;
+}
+
+class AboutBox : public QDialog
 {
     Q_OBJECT
 public:
-    explicit aboutbox(QWidget *parent = 0);
+    explicit AboutBox(QWidget *parent = 0);
 
 signals:
 
 public slots:
+
+private slots:
+    void on_btnClose_accepted();
+
+private:
+    Ui::AboutBox *ui;
 
 };
 

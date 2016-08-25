@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "configwindow.h"
+#include "aboutbox.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,13 +11,29 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void MainWindow::contextMenuEvent(QContextMenuEvent *event)
- {
-    configwindow w;
-    w.show();
- }
-
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_actionConfig_triggered()
+{
+    ConfigWindow w;
+    w.exec();
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutBox w;
+    w.exec();
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QApplication::quit();
 }

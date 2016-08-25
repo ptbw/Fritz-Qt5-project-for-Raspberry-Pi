@@ -13,8 +13,16 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void contextMenuEvent(QContextMenuEvent *event);
     ~MainWindow();
+
+private slots:void on_actionAbout_triggered();
+
+
+    void on_actionConfig_triggered();
+
+    void on_actionSave_triggered();
+
+    void on_actionQuit_triggered();
 
 private:
     Ui::MainWindow *ui;

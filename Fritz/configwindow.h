@@ -1,17 +1,29 @@
 #ifndef CONFIGWINDOW_H
 #define CONFIGWINDOW_H
 
-#include <QMainWindow>
+#include <QDialog>
 
-class configwindow : public QMainWindow
+namespace Ui {
+class ConfigWindow;
+}
+
+class ConfigWindow : public QDialog
 {
     Q_OBJECT
 public:
-    explicit configwindow(QWidget *parent = 0);
+    explicit ConfigWindow(QWidget *parent = 0);
 
 signals:
 
 public slots:
+
+private slots:
+    void on_btnCancelSave_accepted();
+
+    void on_btnCancelSave_rejected();
+
+private:
+    Ui::ConfigWindow *ui;
 
 };
 
