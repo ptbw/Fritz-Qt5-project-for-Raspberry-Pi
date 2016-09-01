@@ -32,7 +32,8 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionSave_triggered()
 {
     Serial * port = new Serial();
-    port->TestSerial();
+    char * portname = "/dev/ttyUSB0";
+    port->TestSerial(portname);
     delete port;
 }
 
