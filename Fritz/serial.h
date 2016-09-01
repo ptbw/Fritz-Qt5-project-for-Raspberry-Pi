@@ -2,6 +2,8 @@
 #define SERIAL_H
 
 #include "string.h"
+#include <QtSerialPort/QSerialPort>
+
 
 class Serial
 {
@@ -20,11 +22,7 @@ public:
 
     Serial();
 
-    int SetInterface(int fd, int speed);
-
-    void SetBlocking(int fd, int should_block);
-
-    void TestSerial(char * portName);
+    int TestSerial();
 
     bool IsConnected();
 
@@ -35,6 +33,13 @@ public:
     bool SendPacket(unsigned char buffer[], int len);
 
     void Read(unsigned char buffer[], int offset, int len);
+
+    int GetVersion(QByteArray requestData);
+
+    QSerialPort *arduino;
+
+    QString arduino_port_name;
+    bool arduino_is_available;
 
 };
 
