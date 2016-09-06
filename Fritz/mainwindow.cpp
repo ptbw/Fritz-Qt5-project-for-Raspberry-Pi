@@ -2,15 +2,15 @@
 #include "ui_mainwindow.h"
 #include "configwindow.h"
 #include "aboutbox.h"
-#include "serial.h"
+#include "robot.h"
 
 #include <QMessageBox>
+#include <QtSerialPort/QSerialPort>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
 }
 
@@ -33,24 +33,18 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    Serial * port = new Serial();
-    port->arduino_port_name = "/dev/ttyUSB0";
-    int result = port->TestSerial();
 
-    if(result == -1)
-        QMessageBox::warning(this, "Port error","Couldn't find the Arduino!");
-    else if(result == -2)
-        QMessageBox::warning(this, "Port error","Fritz not found");
-    else if(result < 4 )
-        QMessageBox::warning(this, "Port error","Fritz found but firmware version is too old!");
-    else
-        QMessageBox::information(this, "Serial Port","Fritz found");
-
-
-    delete port;
 }
 
 void MainWindow::on_actionQuit_triggered()
 {
     QApplication::quit();
 }
+
+void MainWindow::on_comboBox_activated(const QString &arg1)
+{
+    Robot * robot = new Robot();
+    robot->SetExpression(arg1);
+    delete robot;
+}
+

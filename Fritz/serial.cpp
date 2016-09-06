@@ -11,9 +11,11 @@
 #include <sys/select.h>
 #include <sched.h>
 #include "serial.h"
+#include "i.h"
 
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
+#include <QList>
 
 Serial::Serial()
 {
@@ -25,13 +27,15 @@ Serial::Serial()
 
     arduino = new QSerialPort;
 
+    Open();
+
+
 }
 
 bool Serial::IsConnected()
 {
     return foundBoard;
 }
-
 
 int Serial::TestSerial()
 {
@@ -41,14 +45,6 @@ int Serial::TestSerial()
        return -1;
     }
 
-    // open and configure the serialport
-    arduino->setPortName(arduino_port_name);
-    arduino->open(QSerialPort::ReadWrite);
-    arduino->setBaudRate(QSerialPort::Baud57600);
-    arduino->setDataBits(QSerialPort::Data8);
-    arduino->setParity(QSerialPort::NoParity);
-    arduino->setStopBits(QSerialPort::OneStop);
-    arduino->setFlowControl(QSerialPort::NoFlowControl);
 
     QByteArray sendData;
     QByteArray requestData;
@@ -59,6 +55,7 @@ int Serial::TestSerial()
     if(arduino->isWritable())
     {
         arduino->write(sendData);
+        I::sleep(2);
         if (arduino->waitForReadyRead(10000))
         {
             // read request
@@ -71,31 +68,41 @@ int Serial::TestSerial()
         }
     }
 
-    arduino->close();
     return version;
 }
 
-int Serial::Open(char * portname)
+int Serial::Open()
 {
-    foundBoard = true;
-
-    serialPort = open (portname, O_RDWR | O_NOCTTY );
-    if (serialPort < 0)
-    {
-        //error_message ("error %d opening %s: %s", errno, portname, strerror (errno));
-        serialPort = -1;
-        return serialPort;
+    if(!arduino_is_available){
+       return -1;
     }
 
+    if(arduino->isOpen())
+    {
+        arduino->close();
+    }
 
-   foundBoard = true;
-   return serialPort;
+    // open and configure the serialport
+    arduino->setPortName(arduino_port_name);
+    arduino->open(QSerialPort::ReadWrite);
+    arduino->setBaudRate(QSerialPort::Baud57600);
+    arduino->setDataBits(QSerialPort::Data8);
+    arduino->setParity(QSerialPort::NoParity);
+    arduino->setStopBits(QSerialPort::OneStop);
+    arduino->setFlowControl(QSerialPort::NoFlowControl);
+
+    if(arduino->isWritable())
+        arduino_is_available = true;
+
+   return 0;
 }
 
 void Serial::Close()
 {
-   close(serialPort);
-   foundBoard = false;
+   if(arduino->isOpen())
+   {
+       arduino->close();
+   }
 }
 
 int Serial::GetVersion(QByteArray buf)
@@ -130,50 +137,142 @@ int Serial::GetVersion(QByteArray buf)
     return version;
 }
 
-
-bool Serial::SendPacket(unsigned char buffer[], int pl)
+bool Serial::SendPacket(QByteArray sendData, int slen, int rlen)
 {
-    if(foundBoard && serialPort != -1)
+    QByteArray requestData;
+    if(arduino->isWritable())
     {
-        if ((buffer[0] & 127) >= 32)
-        write(serialPort, buffer, pl);
-        Read(buffer, 0, 3);
-
-        int len;
-        if ((buffer[0] & 127) >= 32)
-            len = (buffer[1] | (buffer[2]<<7));
-        else
-            len = buffer[1];
-
-        if (len > 0)
-            Read(buffer, 3, len);
-
+        arduino->write(sendData);
+        I::msleep(10);
+        if (arduino->waitForReadyRead(10))
+        {
+            // read request
+            requestData = arduino->readAll();
+            while (arduino->waitForReadyRead(10))
+                requestData += arduino->readAll();
+        }
         return true;
     }
-
-    //error_message ("Port not open");
     return false;
 }
 
-
-void Serial::Read(unsigned char buffer[], int offset, int len)
+void Serial::Read(QByteArray requestData)
 {
-    if(foundBoard && serialPort != -1)
+    if(arduino->isWritable())
     {
-        while (true)
+        if (arduino->waitForReadyRead(1000))
         {
-            int l = read(serialPort,&buffer[offset], len);
-            offset+=l;
-            len-=l;
-            if (len <= 0) return;
+            // read request
+            requestData = arduino->readAll();
+            while (arduino->waitForReadyRead(10))
+                requestData += arduino->readAll();
         }
     }
-
-    //error_message ("Port not open");
-    return;
 }
 
+void Serial::SendCommand(int cmd)
+{
+  QByteArray buffer;
 
+  buffer[0] = (quint8)(128 | cmd);
+
+  SendPacket(buffer, 1, 1);
+}
+
+void Serial::SendCommand(int cmd, int pin)
+{
+  QByteArray buffer;
+
+  buffer[0] = (quint8)(128 | cmd);
+  buffer[1] = (quint8)(pin & 127);
+  buffer[2] = (quint8)((buffer[0] ^ buffer[1] ^ 1) & 127);
+
+  SendPacket(buffer, 3, 2);
+}
+
+void Serial::SendCommand(int cmd, int pin, int value)
+{
+  QByteArray buffer;
+
+  buffer[0] = (quint8)(128 | cmd);
+  buffer[1] = (quint8)(pin & 127);
+  buffer[2] = (quint8)(value & 127);
+  buffer[3] = (quint8)((value >> 7) & 127);
+  buffer[4] = (quint8)((value >> 14) & 127);
+  buffer[5] = (quint8)((value >> 21) & 127);
+  buffer[6] = (quint8)((value >> 28) & 127);
+  buffer[7] = (quint8)((buffer[0] ^ buffer[1] ^ buffer[2] ^ buffer[3] ^ buffer[4] ^ buffer[5] ^ buffer[6] ^ 6) & 127);
+
+  SendPacket(buffer, 8, 2);
+}
+
+void Serial::SendCommand(int cmd, int pin, short value)
+{
+  QByteArray buffer;
+
+  buffer[0] = (quint8)(128 | cmd);
+  buffer[1] = (quint8)(pin & 127);
+  buffer[2] = (quint8)(value & 127);
+  buffer[3] = (quint8)((value >> 7) & 127);
+  buffer[4] = (quint8)((buffer[0] ^ buffer[1] ^ buffer[2] ^ buffer[3] ^ 3) & 127);
+
+  SendPacket(buffer, 5, 2);
+}
+
+void Serial::SendCommand(int cmd, int pin, quint8 value)
+{
+  QByteArray buffer;
+
+  buffer[0] = (quint8)(128 | cmd);
+  buffer[1] = (quint8)(pin & 127);
+  buffer[2] = (quint8)(value & 127);
+  buffer[3] = (quint8)((buffer[0] ^ buffer[1] ^ buffer[2] ^ 2) & 127);
+
+ SendPacket(buffer, 4, 2);
+}
+
+void Serial::SendCommand(int cmd, QList<int> dat)
+{
+  QByteArray buffer;
+
+  buffer[0] = (quint8)(128 | cmd);
+
+  int i, j;
+  for (j = 1, i = 0; (i < dat.size()); i++)
+  {
+    buffer[j++] = (quint8)(dat[i] & 127);
+    buffer[j++] = (quint8)((dat[i] >> 7) & 127);
+  }
+
+  int crc = buffer[0];
+  crc ^= (j - 1) & 127;
+  crc ^= (j - 1) >> 7;
+  for (i = 1; i < j; i++) crc ^= buffer[i];
+
+  buffer[j++] = (quint8)(crc & 127);
+
+  SendPacket(buffer, j, 1);
+}
+
+void Serial::SendCommand(int cmd, QByteArray dat)
+{
+  QByteArray buffer;
+
+  buffer[0] = (quint8)(128 | cmd);
+
+  int i, j;
+  for (j = 1, i = 0; (i < dat.size()); i++)
+      buffer[j++] = (quint8)dat[i];
+
+  int crc = buffer[0];
+  crc ^= (j - 1) & 127;
+  crc ^= (j - 1) >> 7;
+  for (i = 1; i < j; i++) crc ^= buffer[i];
+
+  buffer[j++] = (quint8)(crc & 127);
+
+  SendPacket(buffer, j, 1);
+}
 
 
 
