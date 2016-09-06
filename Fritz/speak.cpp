@@ -60,7 +60,7 @@
 
     phono oo;
     oo.ipa = "ʊ";         // foot
-    oo.lips = "oooh";
+    oo.lips = "oh";
     phonos.append(oo);
 
     phono ooo;
@@ -97,6 +97,31 @@
     er.ipa = "iə";         // ear
     er.lips = "eee";
     phonos.append(er);
+
+    phono b;
+    b.ipa = "b";         // b
+    b.lips = "mmm";
+    phonos.append(b);
+
+    phono p;
+    p.ipa = "p";         // pee
+    p.lips = "mmm";
+    phonos.append(p);
+
+    phono m;
+    m.ipa = "m";         // mmm
+    m.lips = "mmm";
+    phonos.append(m);
+
+    phono f;
+    f.ipa = "f";         // fuh
+    f.lips = "fuh";
+    phonos.append(f);
+
+    phono v;
+    v.ipa = "v";         // vuh
+    v.lips = "fuh";
+    phonos.append(v);
 
 }
 
