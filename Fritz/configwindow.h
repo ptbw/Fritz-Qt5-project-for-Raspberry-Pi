@@ -6,7 +6,10 @@
 #include <QMap>
 #include <QPixmap>
 
+#include "worker.h"
 #include "serial.h"
+
+class Worker;
 
 namespace Ui {
 class ConfigWindow;
@@ -205,6 +208,9 @@ signals:
 public slots:
 
 private slots:
+    void ActivateTest(const int i);
+    void DeactivateTest();
+
     void on_btnCancelSave_accepted();
 
     void on_btnCancelSave_rejected();
@@ -227,11 +233,16 @@ private slots:
 
 private:
     void SetServo(int pin, float value, int max, int min, int trim, bool inverted = false);
+    void SetServo(int pin, int value);
     void fetchImage(QString filename);
 
     Ui::ConfigWindow *ui;
 
+    Worker *worker;
+
     Serial *serial;
+
+    QThread *thread;
 
     //QSerialPort *arduino;
 

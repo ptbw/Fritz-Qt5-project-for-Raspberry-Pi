@@ -137,12 +137,63 @@ int Serial::GetVersion(QByteArray buf)
     return version;
 }
 
-bool Serial::SendPacket(QByteArray sendData, int slen, int rlen)
+bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
 {
+    unsigned int command;
+    unsigned int length;
+
+    QByteArray sendData;
+    int idx = 0;
+    int crc;
+    int high;
+    // Before CRC
+    // 131 - Command
+    //   2 - pin?
+    // 102 - lsb position
+    //  11
+    //   0
+    //   0
+    //   0
+    // 106 - msb position
+
+    command = crc = buffer[0];    // Command
+    length = slen - 2;
+    if( length < 0 )
+        length = 0;
+
+    sendData[idx++] = command;
+    sendData[idx++] = (quint8) (length & 127);
+    crc ^= (quint8) (length & 127);
+
+    if((command & 127) >= 32)
+    {
+        sendData[idx++] = (quint8) (length >> 7);
+        crc ^= (quint8) (length >> 7);
+    }
+
+    for(int i = 1; i < slen; i++)
+    {
+        sendData[idx++] = buffer[i];
+        crc ^= buffer[i];
+    }
+
+    sendData[9] = crc;
+
+    // After CRC
+    // 131 - Command
+    //   6 - CRC
+    //   2 - pin
+    // 102 - lsb position
+    //  11
+    //   0
+    //   0
+    //   0
+    // 106
+
     QByteArray requestData;
     if(arduino->isWritable())
     {
-        arduino->write(sendData);
+        arduino->write(sendData,9);
         I::msleep(10);
         if (arduino->waitForReadyRead(10))
         {
@@ -173,6 +224,7 @@ void Serial::Read(QByteArray requestData)
 void Serial::SendCommand(int cmd)
 {
   QByteArray buffer;
+  buffer.resize(4096);
 
   buffer[0] = (quint8)(128 | cmd);
 
@@ -182,6 +234,7 @@ void Serial::SendCommand(int cmd)
 void Serial::SendCommand(int cmd, int pin)
 {
   QByteArray buffer;
+  buffer.resize(3);
 
   buffer[0] = (quint8)(128 | cmd);
   buffer[1] = (quint8)(pin & 127);
@@ -194,6 +247,7 @@ void Serial::SendCommand(int cmd, int pin, int value)
 {
   QByteArray buffer;
 
+  buffer.resize(8);
   buffer[0] = (quint8)(128 | cmd);
   buffer[1] = (quint8)(pin & 127);
   buffer[2] = (quint8)(value & 127);
@@ -210,6 +264,7 @@ void Serial::SendCommand(int cmd, int pin, short value)
 {
   QByteArray buffer;
 
+  buffer.resize(5);
   buffer[0] = (quint8)(128 | cmd);
   buffer[1] = (quint8)(pin & 127);
   buffer[2] = (quint8)(value & 127);
@@ -223,6 +278,7 @@ void Serial::SendCommand(int cmd, int pin, quint8 value)
 {
   QByteArray buffer;
 
+  buffer.resize(4);
   buffer[0] = (quint8)(128 | cmd);
   buffer[1] = (quint8)(pin & 127);
   buffer[2] = (quint8)(value & 127);
@@ -235,6 +291,7 @@ void Serial::SendCommand(int cmd, QList<int> dat)
 {
   QByteArray buffer;
 
+  buffer.resize(4096);
   buffer[0] = (quint8)(128 | cmd);
 
   int i, j;
@@ -258,6 +315,7 @@ void Serial::SendCommand(int cmd, QByteArray dat)
 {
   QByteArray buffer;
 
+  buffer.resize(4096);
   buffer[0] = (quint8)(128 | cmd);
 
   int i, j;

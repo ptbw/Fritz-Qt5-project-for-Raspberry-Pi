@@ -5,7 +5,7 @@
 #include "speak.h"
 
 #include <QMessageBox>
-#include <QtSerialPort/QSerialPort>
+//#include <QtSerialPort/QSerialPort>
 #include <QThread>
 #include <QImageReader>
 #include <QMap>
@@ -23,6 +23,8 @@ ConfigWindow::ConfigWindow(QWidget *parent) :
     ss(new RobotState)
 {
     ui->setupUi(this);
+
+    worker = NULL;
 
 //    arduino = new QSerialPort;
 //    arduino_is_available = true;
@@ -101,6 +103,17 @@ ConfigWindow::ConfigWindow(QWidget *parent) :
     fetchImage("oh");
     fetchImage("oooh");
     fetchImage("sss");
+
+    thread = new QThread();
+    worker = new Worker();
+
+    worker->moveToThread(thread);
+    connect(worker, SIGNAL(valueChanged(int)), this, SLOT(ActivateTest(int)));
+    connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
+    connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
+    //connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
+    connect(worker, SIGNAL(finished()), this, SLOT(DeactivateTest));
+
 }
 
 void ConfigWindow::fetchImage(QString filename)
@@ -115,7 +128,6 @@ void ConfigWindow::fetchImage(QString filename)
     }
 }
 
-
 ConfigWindow::~ConfigWindow()
 {
 //    if(arduino->isOpen()){
@@ -125,6 +137,22 @@ ConfigWindow::~ConfigWindow()
     delete cd;
     delete serial;
     delete ui;
+}
+
+void ConfigWindow::ActivateTest(const int val)
+{
+    //int val = text.toInt();
+    if(ui->leftEyebrowTest->checkState() == Qt::Checked )
+    {
+        SetServo(ui->leftEyebrowPin->text().toInt(), val + ui->leftEyebrowMin->text().toInt());
+     }
+}
+
+void ConfigWindow::DeactivateTest()
+{
+    worker->abort();
+    thread->wait(); // If the thread is not running, this will immediately return.
+    ui->btnRunTests->setText("Run Tests");
 }
 
 void ConfigWindow::on_btnCancelSave_accepted()
@@ -139,7 +167,10 @@ void ConfigWindow::on_btnCancelSave_rejected()
 
 void ConfigWindow::on_pushButton_clicked()
 {
-    /*
+    /*    connect(worker, SIGNAL(valueChanged(QString)), ui->label, SLOT(setText(QString)));
+    connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
+    connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
+    connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
     int version = -1;
 
     // open and configure the serialport
@@ -228,6 +259,8 @@ right
         QMessageBox::warning(this, "Port error","Fritz found but firmware version is too old!");
     else
         QMessageBox::information(this, "Serial Port","Fritz found");
+
+
 }
 
 int ConfigWindow::TestSerial()
@@ -312,14 +345,35 @@ void ConfigWindow::SetServo(int pin, float value, int max, int min, int trim, bo
   serial->SendCommand(ARDUINO_SET_SERVO, pin, (short)val + 1500);
 }
 
+void ConfigWindow::SetServo(int pin, int value)
+{
+   serial->SendCommand(ARDUINO_SET_SERVO, pin, (short)value + 1500);
+}
+
 void ConfigWindow::on_btnRunTests_clicked()
 {
-    if(ui->leftEyebrowTest->checkState() == Qt::Checked )
+//    if(ui->leftEyebrowTest->checkState() == Qt::Checked )
+//    {
+////        for(float f = 0; f < 1; f = f + 0.1)
+////        {
+////            SetServo(ui->leftEyebrowPin->text().toInt(), 1.0f - f, ui->leftEyebrowMax->text().toInt(), ui->leftEyebrowMin->text().toInt(),ui->leftEyebrowTrim->text().toInt());
+////        }
+//        for(int val = ui->leftEyebrowMin->text().toInt(); val < ui->leftEyebrowMax->text().toInt(); val += 10)
+//        {
+//            SetServo(ui->leftEyebrowPin->text().toInt(), val);
+//        }
+//     }
+
+    if( thread->isRunning())
     {
-        for(float f = 0; f < 1; f = f + 0.1)
-        {
-            SetServo(ui->leftEyebrowPin->text().toInt(), 1.0f - f, ui->leftEyebrowMax->text().toInt(), ui->leftEyebrowMin->text().toInt(),ui->leftEyebrowTrim->text().toInt());
-        }
+        worker->abort();
+        thread->quit();
+        ui->btnRunTests->setText("Run Tests");
+    }
+    else
+    {
+        worker->requestWork();
+        ui->btnRunTests->setText("Stop");
      }
 }
 
