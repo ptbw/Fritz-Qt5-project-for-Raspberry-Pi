@@ -111,8 +111,8 @@ ConfigWindow::ConfigWindow(QWidget *parent) :
     connect(worker, SIGNAL(valueChanged(int)), this, SLOT(ActivateTest(int)));
     connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
     connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
-    //connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
-    connect(worker, SIGNAL(finished()), this, SLOT(DeactivateTest));
+    connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
+    //connect(worker, SIGNAL(finished()), this, SLOT(DeactivateTest));
 
 }
 
@@ -130,9 +130,11 @@ void ConfigWindow::fetchImage(QString filename)
 
 ConfigWindow::~ConfigWindow()
 {
-//    if(arduino->isOpen()){
-//        arduino->close();
-//    }
+    if( thread->isRunning())
+    {
+        worker->abort();
+        thread->wait();
+    }
     delete ss;
     delete cd;
     delete serial;
@@ -141,12 +143,37 @@ ConfigWindow::~ConfigWindow()
 
 void ConfigWindow::ActivateTest(const int val)
 {
-    //int val = text.toInt();
-    if(ui->leftEyebrowTest->checkState() == Qt::Checked )
-    {
-        SetServo(ui->leftEyebrowPin->text().toInt(), val + ui->leftEyebrowMin->text().toInt());
-     }
+    DoTest(ui->leftEyebrowTest->checkState(),ui->leftEyebrowMin->text().toInt(), ui->leftEyebrowMax->text().toInt(),ui->leftEyebrowPin->text().toInt(), val );
+    DoTest(ui->rightEyebrowTest->checkState(), ui->rightEyebrowMin->text().toInt(), ui->rightEyebrowMax->text().toInt(), ui->rightEyebrowPin->text().toInt(), val );
+    DoTest(ui->leftEyelidTest->checkState(), ui->leftEyelidMin->text().toInt(), ui->leftEyelidMax->text().toInt(), ui->leftEyelidPin->text().toInt(), val );
+    DoTest(ui->rightEyelidTest->checkState(), ui->rightEyelidMin->text().toInt(), ui->rightEyelidMax->text().toInt(), ui->rightEyelidPin->text().toInt(), val );
+
+    DoTest(ui->leftHorizontalEyeTest->checkState(), ui->leftHorizontalEyeMin->text().toInt(), ui->leftHorizontalEyeMax->text().toInt(), ui->leftHorizontalEyePin->text().toInt(), val );
+    DoTest(ui->rightHorizontalEyeTest->checkState(), ui->rightHorizontalEyeMin->text().toInt(), ui->rightHorizontalEyeMax->text().toInt(), ui->rightHorizontalEyePin->text().toInt(), val );
+
+    DoTest(ui->leftVerticalEyeTest->checkState(), ui->leftVerticalEyeMin->text().toInt(), ui->leftVerticalEyeMax->text().toInt(), ui->leftVerticalEyePin->text().toInt(), val );
+    DoTest(ui->rightVerticalEyeTest->checkState(), ui->rightVerticalEyeMin->text().toInt(), ui->rightVerticalEyeMax->text().toInt(), ui->rightVerticalEyePin->text().toInt(), val );
+
+    DoTest(ui->leftLipTest->checkState(), ui->leftLipMin->text().toInt(), ui->leftLipMax->text().toInt(), ui->leftLipPin->text().toInt(), val );
+    DoTest(ui->rightLipTest->checkState(), ui->rightLipMin->text().toInt(), ui->rightLipMax->text().toInt(), ui->rightLipPin->text().toInt(), val );
+
+    DoTest(ui->twistNeckTest->checkState(), ui->twistNeckMin->text().toInt(), ui->twistNeckMax->text().toInt(), ui->twistNeckPin->text().toInt(), val );
+    DoTest(ui->jawTest->checkState(), ui->jawMin->text().toInt(), ui->jawMax->text().toInt(), ui->jawPin->text().toInt(), val );
 }
+
+
+void ConfigWindow::DoTest( Qt::CheckState state, int min, int max, int pin, int val)
+{
+    //range min - max maps to 0 - 100 so val maps to min + val * ( range / 100 )
+    float range = max - min;
+    int pos = (int)min + ( val * range/100);
+
+    if(state == Qt::Checked)
+    {
+        SetServo(pin, pos);
+    }
+}
+
 
 void ConfigWindow::DeactivateTest()
 {
@@ -166,89 +193,7 @@ void ConfigWindow::on_btnCancelSave_rejected()
 }
 
 void ConfigWindow::on_pushButton_clicked()
-{
-    /*    connect(worker, SIGNAL(valueChanged(QString)), ui->label, SLOT(setText(QString)));
-    connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
-    connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
-    connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
-    int version = -1;
-
-    // open and configure the serialport
-    arduino->setPortName(arduino_port_name);
-    arduino->open(QSerialPort::ReadWrite);
-    arduino->setBaudRate(QSerialPort::Baud57600);
-    arduino->setDataBits(QSerialPort::Data8);
-    arduino->setParity(QSerialPort::NoParity);
-    arduino->setStopBits(QSerialPort::OneStop);
-    arduino->setFlowControl(QSerialPort::NoFlowControl);
-
-    QByteArray sendData;
-    QByteArray requestData;
-
-    sendData[0] = 128;
-    sendData[1] = 0;
-right
-    if(arduino->isWritable())
-    {
-        arduino->write(sendData);
-        I::sleep(2);
-        if (arduino->waitForReadyRead(1000))
-        {
-            // read request
-            requestData = arduino->readAll();
-            while (arduino->waitForReadyRead(10))
-                requestData += arduino->readAll();
-
-            //QMessageBox::information(this, "Information", requestData.toUpper());
-            version = GetVersion(requestData);
-        }
-    }
-
-    if(version == -1)
-        QMessageBox::warning(this, "Port errrightor","Couldn't find the Arduino!");
-    else if(version == -2)
-        QMessageBox::warning(this, "Port error","Fritz not found");
-    else if(version < 4 )int ConfigWindow::GetVersion(QByteArray buf)
-{
-
-    char b1 = buf[0];
-    char b2 = buf[1];
-    char b3 = buf[2];
-    char b4 = buf[3];
-    char v1 = buf[4];
-    char v2 = buf[5];
-    char v3 = buf[6];
-
-    int version = ((v1-'0')*100)+((v2-'0')*10)+(v3-'0');
-right
-    if ((b1 == 'A') && (b2 == 'R') && (b3 == 'D') && (b4 == 'U'))
-    {
-        if (version < 4)
-        {
-            foundBoard = false;
-        }
-        else
-        {
-            foundBoard = true;
-        }
-    }
-    elseright
-    {
-        foundBoard = false;if(arduino->isOpen()){
-            arduino->close();
-        }
-        version = -2;
-    }
-    return version;
-}
-        QMessageBox::warning(this, "Port error","Fritz found but firmware version is too old!");
-    else
-        QMessageBox::information(this, "Serial Port","Fritz found");
-
-    if(arduino->isOpen()){
-        arduino->close();
-    }
-    */
+{   
     int version = TestSerial();
 
     if(version == -1)
@@ -265,67 +210,7 @@ right
 
 int ConfigWindow::TestSerial()
 {
-    int version = serial->TestSerial();
-    /*
-    int version = -1;
-
-    if(!arduino_is_available){
-       return -1;
-    }
-
-    QByteArray sendData;
-    QByteArray requestData;
-
-    sendData[0] = 128;
-    sendData[1] = int ConfigWindow::GetVersion(QByteArray buf)
-{
-
-    char b1 = buf[0];
-    char b2 = buf[1];
-    char b3 = buf[2];
-    char b4 = buf[3];
-    char v1 = buf[4];
-    char v2 = buf[5];
-    char v3 = buf[6];
-
-    int version = ((v1-'0')*100)+((v2-'0')*10)+(v3-'0');
-
-    if ((b1 == 'A') && (b2 == 'R') && (b3 == 'D') && (b4 == 'U'))
-    {
-        if (version < 4)
-        {
-            foundBoard = false;I::sleep(1);
-        }
-        else
-        {
-            foundBoard = true;
-        }
-    }
-    else
-    {
-        foundBoard = false;if(arduino->isOpen()){
-            arduino->close();
-        }
-        version = -2;
-    }
-    return version;
-}0;
-
-    if(arduino->isWritable())
-    {
-        arduino->write(sendData);
-        if (arduino->waitForReadyRead(10000))
-        {
-            // read request
-            requestData = arduino->readAll();
-            while (arduino->waitForReadyRead(10))
-                requestData += arduino->readAll();
-
-            //QMessageBox::information(this, "Information", requestData.toUpper());
-            version = GetVersion(requestData);
-        }
-    }void ConfigWindow::SetServo(int pin, float value, int max, int min, int trim, bool inverted = false)
-    */
+    int version = serial->TestSerial();    
     return version;
 }
 
@@ -341,7 +226,6 @@ void ConfigWindow::SetServo(int pin, float value, int max, int min, int trim, bo
   if (val > max) val = max;
   if (val < min) val = min;
 
-  //Console.WriteLine("Pin: " + Convert.ToString(pin) + " Value: " + Convert.ToString(val));
   serial->SendCommand(ARDUINO_SET_SERVO, pin, (short)val + 1500);
 }
 
@@ -352,22 +236,10 @@ void ConfigWindow::SetServo(int pin, int value)
 
 void ConfigWindow::on_btnRunTests_clicked()
 {
-//    if(ui->leftEyebrowTest->checkState() == Qt::Checked )
-//    {
-////        for(float f = 0; f < 1; f = f + 0.1)
-////        {
-////            SetServo(ui->leftEyebrowPin->text().toInt(), 1.0f - f, ui->leftEyebrowMax->text().toInt(), ui->leftEyebrowMin->text().toInt(),ui->leftEyebrowTrim->text().toInt());
-////        }
-//        for(int val = ui->leftEyebrowMin->text().toInt(); val < ui->leftEyebrowMax->text().toInt(); val += 10)
-//        {
-//            SetServo(ui->leftEyebrowPin->text().toInt(), val);
-//        }
-//     }
-
     if( thread->isRunning())
     {
         worker->abort();
-        thread->quit();
+        thread->wait();
         ui->btnRunTests->setText("Run Tests");
     }
     else

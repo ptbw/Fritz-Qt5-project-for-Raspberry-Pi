@@ -10,24 +10,48 @@ Worker::Worker(QObject *parent) :
 
 void Worker::doWork()
 {
-    for (int i = 0; i < 100; i ++) {
-
+    bool running = true;
+    while(running)
+    {
+        for (int i = 0; i < 100; i = i + 5)
+        {
             mutex.lock();
             bool abort = _abort;
             mutex.unlock();
 
-            if (abort) {
+            if (abort)
+            {
+                running = false;
                 break;
             }
 
             QEventLoop loop;
-            QTimer::singleShot(100, &loop, SLOT(quit()));
+            QTimer::singleShot(250, &loop, SLOT(quit()));
             loop.exec();
 
-            //emit valueChanged(QString::number(i));
             emit valueChanged(i);
-     }
+        }
 
+        for (int i = 100; i > 0; i = i - 5)
+        {
+            mutex.lock();
+            bool abort = _abort;
+            mutex.unlock();
+
+            if (abort)
+            {
+                running = false;
+                break;
+            }
+
+            QEventLoop loop;
+            QTimer::singleShot(250, &loop, SLOT(quit()));
+            loop.exec();
+
+            emit valueChanged(i);
+        }
+
+    }
     mutex.lock();
     _working = false;
     mutex.unlock();
@@ -48,7 +72,10 @@ void Worker::requestWork()
 void Worker::abort()
 {
     if (_working) {
+        mutex.lock();
+        _working = false;
         _abort = true;
+        mutex.unlock();
         qDebug()<<"Request worker aborting in Thread "<<thread()->currentThreadId();
     }
 }

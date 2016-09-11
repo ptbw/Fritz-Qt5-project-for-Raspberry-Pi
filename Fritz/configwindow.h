@@ -210,6 +210,7 @@ public slots:
 private slots:
     void ActivateTest(const int i);
     void DeactivateTest();
+    void DoTest(Qt::CheckState state, int min, int max, int pin, int val);
 
     void on_btnCancelSave_accepted();
 

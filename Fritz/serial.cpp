@@ -194,7 +194,7 @@ bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
     if(arduino->isWritable())
     {
         arduino->write(sendData,9);
-        I::msleep(10);
+        //I::msleep(10);
         if (arduino->waitForReadyRead(10))
         {
             // read request
@@ -224,7 +224,7 @@ void Serial::Read(QByteArray requestData)
 void Serial::SendCommand(int cmd)
 {
   QByteArray buffer;
-  buffer.resize(4096);
+  buffer.resize(3);
 
   buffer[0] = (quint8)(128 | cmd);
 
