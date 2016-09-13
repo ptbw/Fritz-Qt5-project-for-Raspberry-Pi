@@ -12,16 +12,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    serial = new Serial();
 }
 
 MainWindow::~MainWindow()
 {
+    delete serial;
     delete ui;
 }
 
 void MainWindow::on_actionConfig_triggered()
 {
     ConfigWindow w;
+    w.serial = serial;
     w.exec();
 }
 
@@ -43,8 +47,11 @@ void MainWindow::on_actionQuit_triggered()
 
 void MainWindow::on_comboBox_activated(const QString &arg1)
 {
-    Robot * robot = new Robot();
+    Robot * robot = new Robot(serial);
     robot->SetExpression(arg1);
+    QEventLoop loop;
+    QTimer::singleShot(5000, &loop, SLOT(quit()));
+    loop.exec();
     delete robot;
 }
 

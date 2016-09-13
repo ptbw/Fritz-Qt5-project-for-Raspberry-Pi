@@ -35,6 +35,7 @@ private:
 public:
 
     Serial();
+    ~Serial();
 
     int TestSerial();
 
@@ -44,6 +45,8 @@ public:
 
     void Close();
 
+    void DoTest(Qt::CheckState state, int min, int max, int pin, int val);
+
     bool SendPacket(QByteArray data, int slen, int rlen);
 
     void Read(QByteArray data);
@@ -51,6 +54,8 @@ public:
     int GetVersion(QByteArray data);
 
     void SetServo(int pin, float value, int max, int min, int trim, bool inverted = false);
+
+    void SetServo(int pin, int value);
 
     void SendCommand(int cmd);
 

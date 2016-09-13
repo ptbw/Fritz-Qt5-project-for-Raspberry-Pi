@@ -9,8 +9,6 @@ class Robot
 private:
     // send packets
 
-    Serial * serial;
-
     static const int minPin = 2;
     static const int maxPin = 19;
 
@@ -42,32 +40,62 @@ private:
     float f_neckTilt;
     float f_neckTwist;
 
-    float leftHorizontalEye;
-    float leftVerticalEye;
-    float rightHorizontalEye;
-    float rightVerticalEye;
-    float leftLip;
-    float rightLip;
-    float jaw;
-    float neckTilt;
-    float neckTwist;
-    float leftEyebrow;
-    float rightEyebrow;
-    float leftEyelid;
-    float rightEyelid;
-    float irValue;
-    float sonarValue;
+    int leftHorizontalEyeMin;
+    int leftHorizontalEyeMax;
+    int leftHorizontalEyePin;
+    int leftVerticalEyeMin;
+    int leftVerticalEyeMax;
+    int leftVerticalEyePin;
+    int rightHorizontalEyeMin;
+    int rightHorizontalEyeMax;
+    int rightHorizontalEyePin;
+    int rightVerticalEyeMin;
+    int rightVerticalEyeMax;
+    int rightVerticalEyePin;
+    int leftLipMin;
+    int leftLipMax;
+    int leftLipPin;
+    int rightLipMin;
+    int rightLipMax;
+    int rightLipPin;
+    int jawMin;
+    int jawMax;
+    int jawPin;
+    int neckTiltMin;
+    int neckTiltMax;
+    int neckTiltPin;
+    int neckTwistMin;
+    int neckTwistMax;
+    int neckTwistPin;
+    int leftEyebrowMin;
+    int leftEyebrowMax;
+    int leftEyebrowPin;
+    int rightEyebrowMin;
+    int rightEyebrowMax;
+    int rightEyebrowPin;
+    int leftEyelidMin;
+    int leftEyelidMax;
+    int leftEyelidPin;
+    int rightEyelidMin;
+    int rightEyelidMax;
+    int rightEyelidPin;
+
+    int irValue;
+    int sonarValue;
 
     CalibrationData * cd;
 
+    Serial * serial;
+
 
 public:
-    Robot();
+    Robot(Serial * serial);
     ~Robot();
 
     void Reset();
-    void SetState(float n_leftHorizontalEye, float n_leftVerticalEye, float n_rightHorizontalEye, float n_rightVerticalEye, float n_leftEyebrow, float n_rightEyebrow, float n_rightEyelid, float n_leftEyelid, float n_leftLip, float n_rightLip, float n_jaw, float n_neckTilt, float n_neckTwist);
+    void SetState(int n_leftHorizontalEye, int n_leftVerticalEye, int n_rightHorizontalEye, int n_rightVerticalEye, int n_leftEyebrow, int n_rightEyebrow, int n_rightEyelid, int n_leftEyelid, int n_leftLip, int n_rightLip, int n_jaw, int n_neckTilt, int n_neckTwist);
     void SetExpression(QString name);
+    void SetMouth(QString shape);
 };
 
 #endif // ROBOT_H

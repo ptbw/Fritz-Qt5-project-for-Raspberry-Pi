@@ -20,7 +20,7 @@
 
     phono aa;              // father
     aa.ipa = "ɑː";
-    a.lips = "aaah";
+    a.lips = "aa";
     phonos.append(aa);
 
     phono e;               // better

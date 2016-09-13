@@ -203,6 +203,8 @@ public:
     static const int ARDUINO_SAVE_CONFIG = 33;
     static const int ARDUINO_SAVE_SEQUENCE = 34;
 
+    Serial *serial;
+
 signals:
 
 public slots:
@@ -210,7 +212,7 @@ public slots:
 private slots:
     void ActivateTest(const int i);
     void DeactivateTest();
-    void DoTest(Qt::CheckState state, int min, int max, int pin, int val);
+
 
     void on_btnCancelSave_accepted();
 
@@ -232,6 +234,8 @@ private slots:
 
     void on_btnTestSpeech_4_clicked();
 
+    void on_btnTestSpeech_5_clicked();
+
 private:
     void SetServo(int pin, float value, int max, int min, int trim, bool inverted = false);
     void SetServo(int pin, int value);
@@ -241,9 +245,11 @@ private:
 
     Worker *worker;
 
-    Serial *serial;
+    //Serial *serial;
 
     QThread *thread;
+
+    QWidget *main;
 
     //QSerialPort *arduino;
 
@@ -270,3 +276,5 @@ private:
 };
 
 #endif // CONFIGWINDOW_H
+
+

@@ -16,6 +16,7 @@
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 #include <QList>
+#include <QDebug>
 
 Serial::Serial()
 {
@@ -28,8 +29,11 @@ Serial::Serial()
     arduino = new QSerialPort;
 
     Open();
+}
 
-
+Serial::~Serial()
+{
+    Close();
 }
 
 bool Serial::IsConnected()
@@ -55,8 +59,8 @@ int Serial::TestSerial()
     if(arduino->isWritable())
     {
         arduino->write(sendData);
-        I::sleep(2);
-        if (arduino->waitForReadyRead(10000))
+        I::msleep(10);
+        if (arduino->waitForReadyRead(100))
         {
             // read request
             requestData = arduino->readAll();
@@ -73,18 +77,13 @@ int Serial::TestSerial()
 
 int Serial::Open()
 {
-    if(!arduino_is_available){
-       return -1;
-    }
-
-    if(arduino->isOpen())
-    {
-        arduino->close();
-    }
-
     // open and configure the serialport
     arduino->setPortName(arduino_port_name);
-    arduino->open(QSerialPort::ReadWrite);
+    if( !arduino->open(QSerialPort::ReadWrite) )
+    {
+      qDebug()<<"Unable to open serial port";
+    }
+    I::sleep(2);
     arduino->setBaudRate(QSerialPort::Baud57600);
     arduino->setDataBits(QSerialPort::Data8);
     arduino->setParity(QSerialPort::NoParity);
@@ -98,11 +97,13 @@ int Serial::Open()
 }
 
 void Serial::Close()
-{
+{    
    if(arduino->isOpen())
    {
        arduino->close();
    }
+   arduino_is_available = false;
+   foundBoard = false;
 }
 
 int Serial::GetVersion(QByteArray buf)
@@ -140,12 +141,12 @@ int Serial::GetVersion(QByteArray buf)
 bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
 {
     unsigned int command;
-    unsigned int length;
+    int length;
 
     QByteArray sendData;
     int idx = 0;
     int crc;
-    int high;
+    //int high;
     // Before CRC
     // 131 - Command
     //   2 - pin?
@@ -194,7 +195,7 @@ bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
     if(arduino->isWritable())
     {
         arduino->write(sendData,9);
-        //I::msleep(10);
+        //I::msleep(2);
         if (arduino->waitForReadyRead(10))
         {
             // read request
@@ -219,6 +220,25 @@ void Serial::Read(QByteArray requestData)
                 requestData += arduino->readAll();
         }
     }
+}
+
+
+void Serial::DoTest( Qt::CheckState state, int min, int max, int pin, int val)
+{
+    //range min - max maps to 0 - 100 so val maps to min + val * ( range / 100 )
+    float range = max - min;
+    int pos = (int)min + ( val * range/100);
+
+    if(state == Qt::Checked)
+    {
+        SetServo(pin, pos);
+    }
+}
+
+
+void Serial::SetServo(int pin, int value)
+{
+   SendCommand(ARDUINO_SET_SERVO, pin, (short)value + 1500);
 }
 
 void Serial::SendCommand(int cmd)

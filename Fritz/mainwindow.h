@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "serial.h"
 #include <QMainWindow>
 
 
@@ -16,8 +17,34 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:void on_actionAbout_triggered();
+    int leftHorizontalEyeMin;
+    int leftHorizontalEyeMax;
+    int leftVerticalEyeMin;
+    int leftVerticalEyeMax;
+    int rightHorizontalEyeMin;
+    int rightHorizontalEyeMax;
+    int rightVerticalEyeMin;
+    int rightVerticalEyeMax;
+    int leftLipMin;
+    int leftLipMax;
+    int rightLipMin;
+    int rightLipMax;
+    int jawMin;
+    int jawMax;
+    int neckTiltMin;
+    int neckTiltMax;
+    int neckTwistMin;
+    int neckTwistMax;
+    int leftEyebrowMin;
+    int leftEyebrowMax;
+    int rightEyebrowMin;
+    int rightEyebrowMax;
+    int leftEyelidMin;
+    int leftEyelidMax;
+    int rightEyelidMin;
+    int rightEyelidMax;
 
+private slots:void on_actionAbout_triggered();
 
     void on_actionConfig_triggered();
 
@@ -31,6 +58,7 @@ private slots:void on_actionAbout_triggered();
 private:
     Ui::MainWindow *ui;
 
+    Serial *serial;
 
 };
 

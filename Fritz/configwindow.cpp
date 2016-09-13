@@ -3,6 +3,7 @@
 
 #include "i.h"
 #include "speak.h"
+#include "robot.h"
 
 #include <QMessageBox>
 //#include <QtSerialPort/QSerialPort>
@@ -18,11 +19,13 @@ CalibrationData::CalibrationData()
 ConfigWindow::ConfigWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConfigWindow),
-    serial(new Serial),
+    //serial(new Serial),
     cd(new CalibrationData),
     ss(new RobotState)
 {
     ui->setupUi(this);
+
+    main = parent;
 
     worker = NULL;
 
@@ -85,7 +88,7 @@ ConfigWindow::ConfigWindow(QWidget *parent) :
 //    rightVerticalEyePin.SelectedIndex=9;
 //    neckTwistPin.SelectedIndex=10;
 //    neckTiltPin.SelectedIndex = 11;
-//    jawPin.SelectedIndex = 12;
+//    jawPin.SelectedIndex = 12;void ConfigWindow::SetServo(int pin, int value)
 //    sonarTriggerPin.SelectedIndex = 13;
 //    sonarEchoPin.SelectedIndex = 14;
 //    irPin.SelectedIndex = 15;
@@ -130,6 +133,8 @@ void ConfigWindow::fetchImage(QString filename)
 
 ConfigWindow::~ConfigWindow()
 {
+
+
     if( thread->isRunning())
     {
         worker->abort();
@@ -137,41 +142,28 @@ ConfigWindow::~ConfigWindow()
     }
     delete ss;
     delete cd;
-    delete serial;
+    //delete serial;
     delete ui;
 }
 
 void ConfigWindow::ActivateTest(const int val)
 {
-    DoTest(ui->leftEyebrowTest->checkState(),ui->leftEyebrowMin->text().toInt(), ui->leftEyebrowMax->text().toInt(),ui->leftEyebrowPin->text().toInt(), val );
-    DoTest(ui->rightEyebrowTest->checkState(), ui->rightEyebrowMin->text().toInt(), ui->rightEyebrowMax->text().toInt(), ui->rightEyebrowPin->text().toInt(), val );
-    DoTest(ui->leftEyelidTest->checkState(), ui->leftEyelidMin->text().toInt(), ui->leftEyelidMax->text().toInt(), ui->leftEyelidPin->text().toInt(), val );
-    DoTest(ui->rightEyelidTest->checkState(), ui->rightEyelidMin->text().toInt(), ui->rightEyelidMax->text().toInt(), ui->rightEyelidPin->text().toInt(), val );
+    serial->DoTest(ui->leftEyebrowTest->checkState(),ui->leftEyebrowMin->text().toInt(), ui->leftEyebrowMax->text().toInt(),ui->leftEyebrowPin->text().toInt(), val );
+    serial->DoTest(ui->rightEyebrowTest->checkState(), ui->rightEyebrowMin->text().toInt(), ui->rightEyebrowMax->text().toInt(), ui->rightEyebrowPin->text().toInt(), val );
+    serial->DoTest(ui->leftEyelidTest->checkState(), ui->leftEyelidMin->text().toInt(), ui->leftEyelidMax->text().toInt(), ui->leftEyelidPin->text().toInt(), val );
+    serial->DoTest(ui->rightEyelidTest->checkState(), ui->rightEyelidMin->text().toInt(), ui->rightEyelidMax->text().toInt(), ui->rightEyelidPin->text().toInt(), val );
 
-    DoTest(ui->leftHorizontalEyeTest->checkState(), ui->leftHorizontalEyeMin->text().toInt(), ui->leftHorizontalEyeMax->text().toInt(), ui->leftHorizontalEyePin->text().toInt(), val );
-    DoTest(ui->rightHorizontalEyeTest->checkState(), ui->rightHorizontalEyeMin->text().toInt(), ui->rightHorizontalEyeMax->text().toInt(), ui->rightHorizontalEyePin->text().toInt(), val );
+    serial->DoTest(ui->leftHorizontalEyeTest->checkState(), ui->leftHorizontalEyeMin->text().toInt(), ui->leftHorizontalEyeMax->text().toInt(), ui->leftHorizontalEyePin->text().toInt(), val );
+    serial->DoTest(ui->rightHorizontalEyeTest->checkState(), ui->rightHorizontalEyeMin->text().toInt(), ui->rightHorizontalEyeMax->text().toInt(), ui->rightHorizontalEyePin->text().toInt(), val );
 
-    DoTest(ui->leftVerticalEyeTest->checkState(), ui->leftVerticalEyeMin->text().toInt(), ui->leftVerticalEyeMax->text().toInt(), ui->leftVerticalEyePin->text().toInt(), val );
-    DoTest(ui->rightVerticalEyeTest->checkState(), ui->rightVerticalEyeMin->text().toInt(), ui->rightVerticalEyeMax->text().toInt(), ui->rightVerticalEyePin->text().toInt(), val );
+    serial->DoTest(ui->leftVerticalEyeTest->checkState(), ui->leftVerticalEyeMin->text().toInt(), ui->leftVerticalEyeMax->text().toInt(), ui->leftVerticalEyePin->text().toInt(), val );
+    serial->DoTest(ui->rightVerticalEyeTest->checkState(), ui->rightVerticalEyeMin->text().toInt(), ui->rightVerticalEyeMax->text().toInt(), ui->rightVerticalEyePin->text().toInt(), val );
 
-    DoTest(ui->leftLipTest->checkState(), ui->leftLipMin->text().toInt(), ui->leftLipMax->text().toInt(), ui->leftLipPin->text().toInt(), val );
-    DoTest(ui->rightLipTest->checkState(), ui->rightLipMin->text().toInt(), ui->rightLipMax->text().toInt(), ui->rightLipPin->text().toInt(), val );
+    serial->DoTest(ui->leftLipTest->checkState(), ui->leftLipMin->text().toInt(), ui->leftLipMax->text().toInt(), ui->leftLipPin->text().toInt(), val );
+    serial->DoTest(ui->rightLipTest->checkState(), ui->rightLipMin->text().toInt(), ui->rightLipMax->text().toInt(), ui->rightLipPin->text().toInt(), val );
 
-    DoTest(ui->twistNeckTest->checkState(), ui->twistNeckMin->text().toInt(), ui->twistNeckMax->text().toInt(), ui->twistNeckPin->text().toInt(), val );
-    DoTest(ui->jawTest->checkState(), ui->jawMin->text().toInt(), ui->jawMax->text().toInt(), ui->jawPin->text().toInt(), val );
-}
-
-
-void ConfigWindow::DoTest( Qt::CheckState state, int min, int max, int pin, int val)
-{
-    //range min - max maps to 0 - 100 so val maps to min + val * ( range / 100 )
-    float range = max - min;
-    int pos = (int)min + ( val * range/100);
-
-    if(state == Qt::Checked)
-    {
-        SetServo(pin, pos);
-    }
+    serial->DoTest(ui->twistNeckTest->checkState(), ui->twistNeckMin->text().toInt(), ui->twistNeckMax->text().toInt(), ui->twistNeckPin->text().toInt(), val );
+    serial->DoTest(ui->jawTest->checkState(), ui->jawMin->text().toInt(), ui->jawMax->text().toInt(), ui->jawPin->text().toInt(), val );
 }
 
 
@@ -272,8 +264,6 @@ void ConfigWindow::on_btnTestSpeech_3_clicked()
 void ConfigWindow::on_btnTestSpeech_4_clicked()
 {
     Speak speak;
-
-
     QString msg = "Your reasoning is excellent. It's only your basic assumptions that are wrong.";
     if( ui->textToSay->text() != "" )
         msg = ui->textToSay->text();
@@ -292,4 +282,24 @@ void ConfigWindow::on_btnTestSpeech_4_clicked()
     }
     QPixmap pix = imageMap["sss"];
     ui->lblPicture->setPixmap(pix);
+}
+
+void ConfigWindow::on_btnTestSpeech_5_clicked()
+{
+    Speak speak;
+    Robot robot(serial);
+    QString msg = "Your reasoning is excellent. It's only your basic assumptions that are wrong.";
+    if( ui->textToSay->text() != "" )
+        msg = ui->textToSay->text();
+
+    QStringList phons = speak.TextToPhon(msg);
+    speak.TextToSpeech(msg);
+
+    QStringListIterator iterator(phons);
+    while (iterator.hasNext())
+    {
+        QString shape = speak.GetMouthShape(iterator.next());
+        robot.SetMouth(shape);
+        I::msleep(10);
+    }
 }
