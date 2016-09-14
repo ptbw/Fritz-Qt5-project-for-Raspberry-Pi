@@ -193,7 +193,7 @@ void Robot::SetState(int n_leftHorizontalEye, int n_leftVerticalEye, int n_right
     if (n_rightVerticalEye != -1) serial->DoTest(Qt::Checked, rightVerticalEyeMin, rightVerticalEyeMax, rightVerticalEyePin, n_rightVerticalEye );
     if (n_leftLip != -1) serial->DoTest(Qt::Checked, leftLipMin, leftLipMax, leftLipPin, n_leftLip );
     if (n_rightLip != -1) serial->DoTest(Qt::Checked, rightLipMin, rightLipMax, rightLipPin, n_rightLip );
-    if (n_neckTwist != -1) serial->DoTest(Qt::Checked, neckTiltMin, neckTiltMax, neckTwistPin, n_neckTwist );
+    if (n_neckTwist != -1) serial->DoTest(Qt::Checked, neckTwistMin, neckTwistMax, neckTwistPin, n_neckTwist );
     if (n_jaw != -1) serial->DoTest(Qt::Checked, jawMin, jawMax, jawPin, n_jaw );
 }
 

@@ -44,6 +44,7 @@ public:
     int rightEyelidMin;
     int rightEyelidMax;
 
+    void SpeakMessage(QString msg);
 private slots:void on_actionAbout_triggered();
 
     void on_actionConfig_triggered();
@@ -54,6 +55,22 @@ private slots:void on_actionAbout_triggered();
 
 
     void on_comboBox_activated(const QString &arg1);
+
+    void on_btnLeft_clicked();
+
+    void on_btnHello_clicked();
+
+    void on_btnAsk_clicked();
+
+    void on_btnFortune_clicked();
+
+    void on_btnOkBye_clicked();
+
+    void on_btnThanks_clicked();
+
+    void on_btnCentre_clicked();
+
+    void on_btnRight_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -48,4 +48,5 @@ OTHER_FILES += \
     images/oh.png \
     images/oooh.png \
     images/phoneme mouth chart.png \
-    images/sss.png
+    images/sss.png \
+    speech/cookies.txt
