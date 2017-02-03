@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     serial.cpp \
     robot.cpp \
     speak.cpp \
-    worker.cpp
+    worker.cpp \
+    keyenterreceiver.cpp
 
 HEADERS  += mainwindow.h \
     configwindow.h \
@@ -28,7 +29,8 @@ HEADERS  += mainwindow.h \
     i.h \
     robot.h \
     speak.h \
-    worker.h
+    worker.h \
+    keyenterreceiver.h
 
 FORMS    += mainwindow.ui \
     aboutbox.ui \

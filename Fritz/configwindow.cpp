@@ -110,6 +110,9 @@ ConfigWindow::ConfigWindow(QWidget *parent) :
     thread = new QThread();
     worker = new Worker();
 
+    key = new keyEnterReceiver();
+    this->installEventFilter(key);
+
     worker->moveToThread(thread);
     connect(worker, SIGNAL(valueChanged(int)), this, SLOT(ActivateTest(int)));
     connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
@@ -144,6 +147,7 @@ ConfigWindow::~ConfigWindow()
     delete cd;
     //delete serial;
     delete ui;
+    delete key;
 }
 
 void ConfigWindow::ActivateTest(const int val)
@@ -302,4 +306,9 @@ void ConfigWindow::on_btnTestSpeech_5_clicked()
         robot.SetMouth(shape);
         I::msleep(10);
     }
+}
+
+void ConfigWindow::on_btnTestSonar_clicked()
+{
+    QMessageBox::information(this, "Button Pressed","Pressed");
 }

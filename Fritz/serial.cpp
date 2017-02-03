@@ -24,7 +24,7 @@ Serial::Serial()
     foundBoard = false;
 
     arduino_is_available = true;
-    arduino_port_name = "/dev/ttyUSB0";
+    arduino_port_name = "/dev/ttyACM0";
 
     arduino = new QSerialPort;
 

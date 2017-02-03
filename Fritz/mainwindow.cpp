@@ -89,7 +89,8 @@ void MainWindow::on_btnAsk_clicked()
 
 void MainWindow::on_btnFortune_clicked()
 {
-    QString command = "fortune cookies.txt";
+    // QString command = "fortune cookies.txt";
+    QString command = "fortune -s";
 
     QProcess process;
     process.start(command);

@@ -67,7 +67,7 @@
      <x>30</x>
      <y>100</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -130,7 +130,7 @@
      <x>30</x>
      <y>60</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -219,7 +219,7 @@
      <x>420</x>
      <y>60</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -275,7 +275,7 @@
      <x>420</x>
      <y>100</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -422,7 +422,7 @@
      <x>20</x>
      <y>10</y>
      <width>251</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -450,7 +450,7 @@
      <x>30</x>
      <y>200</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -529,7 +529,7 @@
      <x>30</x>
      <y>160</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -585,7 +585,7 @@
      <x>30</x>
      <y>300</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -664,7 +664,7 @@
      <x>30</x>
      <y>260</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -720,7 +720,7 @@
      <x>30</x>
      <y>400</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -799,7 +799,7 @@
      <x>30</x>
      <y>360</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -855,7 +855,7 @@
      <x>30</x>
      <y>500</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -934,7 +934,7 @@
      <x>30</x>
      <y>460</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -990,7 +990,7 @@
      <x>30</x>
      <y>600</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -1069,7 +1069,7 @@
      <x>30</x>
      <y>560</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_15">
@@ -1125,7 +1125,7 @@
      <x>420</x>
      <y>200</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_16">
@@ -1204,7 +1204,7 @@
      <x>420</x>
      <y>160</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_17">
@@ -1260,7 +1260,7 @@
      <x>420</x>
      <y>300</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_18">
@@ -1339,7 +1339,7 @@
      <x>420</x>
      <y>260</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_19">
@@ -1395,7 +1395,7 @@
      <x>420</x>
      <y>400</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -1474,7 +1474,7 @@
      <x>420</x>
      <y>360</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_21">
@@ -1530,7 +1530,7 @@
      <x>420</x>
      <y>500</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_22">
@@ -1609,7 +1609,7 @@
      <x>420</x>
      <y>460</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -1665,7 +1665,7 @@
      <x>420</x>
      <y>600</y>
      <width>351</width>
-     <height>29</height>
+     <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_24">
@@ -1744,7 +1744,7 @@
      <x>420</x>
      <y>560</y>
      <width>351</width>
-     <height>29</height>
+     <height>33</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_25">
@@ -1819,6 +1819,44 @@
    <property name="text">
     <string>Test Robot</string>
    </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="textSonar">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>330</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnTestSonar">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>360</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Test Sonar</string>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <zorder>frame_2</zorder>
   <zorder>frame</zorder>
@@ -1868,6 +1906,8 @@
   <zorder>layoutWidget_22</zorder>
   <zorder>label_62</zorder>
   <zorder>btnTestSpeech_5</zorder>
+  <zorder>textSonar</zorder>
+  <zorder>btnTestSonar</zorder>
  </widget>
  <tabstops>
   <tabstop>comboBox</tabstop>

@@ -8,6 +8,7 @@
 
 #include "worker.h"
 #include "serial.h"
+#include "keyenterreceiver.h"
 
 class Worker;
 
@@ -236,6 +237,8 @@ private slots:
 
     void on_btnTestSpeech_5_clicked();
 
+    void on_btnTestSonar_clicked();
+
 private:
     void SetServo(int pin, float value, int max, int min, int trim, bool inverted = false);
     void SetServo(int pin, int value);
@@ -250,6 +253,8 @@ private:
     QThread *thread;
 
     QWidget *main;
+
+    keyEnterReceiver* key;
 
     //QSerialPort *arduino;
 
