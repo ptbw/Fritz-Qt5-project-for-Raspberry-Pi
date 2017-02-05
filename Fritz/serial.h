@@ -34,6 +34,8 @@ private:
 
     double sonarValue;
 
+    static const int waitTimeOut = 1000;
+
 public:
 
     Serial();

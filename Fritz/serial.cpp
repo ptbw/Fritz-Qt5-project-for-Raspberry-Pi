@@ -58,12 +58,15 @@ int Serial::TestSerial()
 
     if(arduino->isWritable())
     {
-        arduino->write(sendData);        
-        if (arduino->waitForReadyRead(1000))
+        arduino->write(sendData);
+        if (!arduino->waitForBytesWritten(waitTimeOut))
+            return version;
+
+        if (arduino->waitForReadyRead(waitTimeOut))
         {
             // read request
             requestData = arduino->readAll();
-            while (arduino->waitForReadyRead(10))
+            while (arduino->waitForReadyRead(100))
                 requestData += arduino->readAll();
 
             //QMessageBox::information(this, "Information", requestData.toUpper());
@@ -201,12 +204,15 @@ bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
     QByteArray requestData;
     if(arduino->isWritable())
     {
-        arduino->write(sendData,9);        
-        if (arduino->waitForReadyRead(1000))
+        arduino->write(sendData,9);
+        if (!arduino->waitForBytesWritten(waitTimeOut))
+            return false;
+
+        if (arduino->waitForReadyRead(waitTimeOut))
         {
             // read request
             requestData = arduino->readAll();
-            while (arduino->waitForReadyRead(10))
+            while (arduino->waitForReadyRead(100))
                 requestData += arduino->readAll();
 
             if(((uchar)requestData[0] & 127) == ARDUINO_GET_SONAR)
@@ -223,21 +229,18 @@ bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
 
 void Serial::Read(QByteArray requestData)
 {
-    if(arduino->isWritable())
+    if (arduino->waitForReadyRead(waitTimeOut))
     {
-        if (arduino->waitForReadyRead(1000))
-        {
-            // read request
-            requestData = arduino->readAll();
-            while (arduino->waitForReadyRead(10))
-                requestData += arduino->readAll();
+        // read request
+        requestData = arduino->readAll();
+        while (arduino->waitForReadyRead(100))
+            requestData += arduino->readAll();
 
-            if(((uchar)requestData[0] & 127) == ARDUINO_GET_SONAR)
-            {
-              int x = ((int)requestData[3] | (requestData[4] << 7));
-              // convert distance to cm
-              sonarValue = (float)((float)x / 29.10f);
-            }
+        if(((uchar)requestData[0] & 127) == ARDUINO_GET_SONAR)
+        {
+          int x = ((int)requestData[3] | (requestData[4] << 7));
+          // convert distance to cm
+          sonarValue = (float)((float)x / 29.10f);
         }
     }
 }

@@ -66,7 +66,7 @@
     <rect>
      <x>30</x>
      <y>100</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -109,16 +109,6 @@
      <widget class="QLabel" name="label_5">
       <property name="text">
        <string>Max:</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="leftEyebrowMax">
-      <property name="text">
-       <string>292</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
@@ -274,11 +264,21 @@
     <rect>
      <x>420</x>
      <y>100</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <item>
+     <widget class="QLineEdit" name="leftEyebrowMax">
+      <property name="text">
+       <string>292</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QLabel" name="label_9">
       <property name="text">
@@ -435,8 +435,11 @@
     </item>
     <item>
      <widget class="QComboBox" name="comboBox">
+      <property name="editable">
+       <bool>true</bool>
+      </property>
       <property name="currentText">
-       <string>/dev/ttyUSB0</string>
+       <string notr="true">/dev/ttyACM0</string>
       </property>
       <item>
        <property name="text">
@@ -452,7 +455,7 @@
     <rect>
      <x>30</x>
      <y>200</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -587,7 +590,7 @@
     <rect>
      <x>30</x>
      <y>300</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -722,7 +725,7 @@
     <rect>
      <x>30</x>
      <y>400</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -857,7 +860,7 @@
     <rect>
      <x>30</x>
      <y>500</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -992,7 +995,7 @@
     <rect>
      <x>30</x>
      <y>600</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -1127,7 +1130,7 @@
     <rect>
      <x>420</x>
      <y>200</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -1262,7 +1265,7 @@
     <rect>
      <x>420</x>
      <y>300</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -1340,9 +1343,9 @@
    <property name="geometry">
     <rect>
      <x>420</x>
-     <y>260</y>
-     <width>369</width>
-     <height>35</height>
+     <y>254</y>
+     <width>351</width>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_19">
@@ -1397,7 +1400,7 @@
     <rect>
      <x>420</x>
      <y>400</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -1532,7 +1535,7 @@
     <rect>
      <x>420</x>
      <y>500</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -1667,7 +1670,7 @@
     <rect>
      <x>420</x>
      <y>600</y>
-     <width>409</width>
+     <width>351</width>
      <height>35</height>
     </rect>
    </property>
@@ -1923,8 +1926,6 @@
   <tabstop>leftEyebrowPin</tabstop>
   <tabstop>leftEyebrowTest</tabstop>
   <tabstop>leftEyebrowMin</tabstop>
-  <tabstop>leftEyebrowTrim</tabstop>
-  <tabstop>leftEyebrowMax</tabstop>
   <tabstop>rightEyebrowPin</tabstop>
   <tabstop>rightEyebrowTest</tabstop>
   <tabstop>rightEyebrowMin</tabstop>
