@@ -58,9 +58,8 @@ int Serial::TestSerial()
 
     if(arduino->isWritable())
     {
-        arduino->write(sendData);
-        I::msleep(10);
-        if (arduino->waitForReadyRead(100))
+        arduino->write(sendData);        
+        if (arduino->waitForReadyRead(1000))
         {
             // read request
             requestData = arduino->readAll();
@@ -93,6 +92,8 @@ int Serial::Open()
     if(arduino->isWritable())
         arduino_is_available = true;
 
+    sonarValue = 9999.0;
+
    return 0;
 }
 
@@ -105,6 +106,12 @@ void Serial::Close()
    arduino_is_available = false;
    foundBoard = false;
 }
+
+double Serial::GetSonar()
+{
+    return sonarValue;
+}
+
 
 int Serial::GetVersion(QByteArray buf)
 {
@@ -194,14 +201,20 @@ bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
     QByteArray requestData;
     if(arduino->isWritable())
     {
-        arduino->write(sendData,9);
-        //I::msleep(2);
-        if (arduino->waitForReadyRead(10))
+        arduino->write(sendData,9);        
+        if (arduino->waitForReadyRead(1000))
         {
             // read request
             requestData = arduino->readAll();
             while (arduino->waitForReadyRead(10))
                 requestData += arduino->readAll();
+
+            if(((uchar)requestData[0] & 127) == ARDUINO_GET_SONAR)
+            {
+              int x = ((int)requestData[3] | (requestData[4] << 7));
+              // convert distance to cm
+              sonarValue = (float)((float)x / 29.10f);
+            }
         }
         return true;
     }
@@ -218,6 +231,13 @@ void Serial::Read(QByteArray requestData)
             requestData = arduino->readAll();
             while (arduino->waitForReadyRead(10))
                 requestData += arduino->readAll();
+
+            if(((uchar)requestData[0] & 127) == ARDUINO_GET_SONAR)
+            {
+              int x = ((int)requestData[3] | (requestData[4] << 7));
+              // convert distance to cm
+              sonarValue = (float)((float)x / 29.10f);
+            }
         }
     }
 }

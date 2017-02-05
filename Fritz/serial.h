@@ -32,6 +32,8 @@ private:
 
     bool foundBoard;
 
+    double sonarValue;
+
 public:
 
     Serial();
@@ -52,6 +54,8 @@ public:
     void Read(QByteArray data);
 
     int GetVersion(QByteArray data);
+
+    double GetSonar();
 
     void SetServo(int pin, float value, int max, int min, int trim, bool inverted = false);
 

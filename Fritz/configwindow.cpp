@@ -310,5 +310,8 @@ void ConfigWindow::on_btnTestSpeech_5_clicked()
 
 void ConfigWindow::on_btnTestSonar_clicked()
 {
-    QMessageBox::information(this, "Button Pressed","Pressed");
+    Robot robot(serial);
+    double distance = robot.GetSonar();
+    QString msg = "Distance: " + QString::number(distance);
+    QMessageBox::information(this, "Button Pressed",msg);
 }

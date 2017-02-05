@@ -69,6 +69,11 @@ Robot::Robot(Serial *serial)
      rightEyelidMax = 581;
      rightEyelidPin = 3;
 
+     sonarOutPin = 15;
+     sonarInPin = 16;
+
+     // Prime the distance sensor
+     GetSonar();
 }
 
 Robot::~Robot()
@@ -79,6 +84,14 @@ Robot::~Robot()
 void Robot::Reset()
 {
     RobotState initState = new RobotState();
+}
+
+double Robot::GetSonar()
+{
+     serial->SendCommand(ARDUINO_GET_SONAR, sonarOutPin, (short) sonarInPin);
+     sonarValue = serial->GetSonar();
+
+     return sonarValue;
 }
 
 void Robot::SetMouth(QString shape)
