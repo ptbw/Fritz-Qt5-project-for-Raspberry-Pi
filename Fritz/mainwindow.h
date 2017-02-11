@@ -1,9 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "serial.h"
 #include <QMainWindow>
 
+#include "animate.h"
+#include "serial.h"
+
+class Animate;
 
 namespace Ui {
 class MainWindow;
@@ -45,14 +48,20 @@ public:
     int rightEyelidMax;
 
     void SpeakMessage(QString msg);
-private slots:void on_actionAbout_triggered();
+
+private slots:
+
+    void on_actionAbout_triggered();
+
+    //void on_SpeakPhrase(int i);
+
+    void on_Stop();
 
     void on_actionConfig_triggered();
 
     void on_actionSave_triggered();
 
     void on_actionQuit_triggered();
-
 
     void on_comboBox_activated(const QString &arg1);
 
@@ -72,10 +81,17 @@ private slots:void on_actionAbout_triggered();
 
     void on_btnRight_clicked();
 
+    void on_btnAnimate_clicked();
+
+
 private:
     Ui::MainWindow *ui;
 
     Serial *serial;
+
+    Animate *animate;
+
+    QThread *thread;
 
 };
 

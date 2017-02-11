@@ -3,9 +3,10 @@
 
 #include "string.h"
 #include <QtSerialPort/QSerialPort>
+#include <QObject>
 
 
-class Serial
+class Serial : public QObject
 {
 
 private:
@@ -34,14 +35,14 @@ private:
 
     double sonarValue;
 
-    static const int waitTimeOut = 1000;
+    int version;
+
+    static const int waitTimeOut = 500;
 
 public:
 
     Serial();
     ~Serial();
-
-    int TestSerial();
 
     bool IsConnected();
 
@@ -51,11 +52,18 @@ public:
 
     void DoTest(Qt::CheckState state, int min, int max, int pin, int val);
 
-    bool SendPacket(QByteArray data, int slen, int rlen);
+    int TestSerialOld();
+    bool SendPacketOld(QByteArray data, int slen, int rlen);
+    void ReadOld(QByteArray data);
 
-    void Read(QByteArray data);
+    int TestSerial();
+    bool SendPacket(QByteArray data, int slen, int rlen);
+    void handleReadyRead();
+    void handleError(QSerialPort::SerialPortError serialPortError);
 
     int GetVersion(QByteArray data);
+
+    int GetVersion();
 
     double GetSonar();
 

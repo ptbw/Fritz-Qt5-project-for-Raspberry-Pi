@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include "configwindow.h"
 #include "aboutbox.h"
 #include "robot.h"
@@ -17,12 +18,39 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     serial = new Serial();
+
+    thread = new QThread();
+    animate = new Animate(serial);
+
+    animate->moveToThread(thread);
+    //connect(animate, SIGNAL(animate()), this, SLOT(do_Animate()));
+    connect(animate, SIGNAL(workRequested()), thread, SLOT(start()));
+    connect(thread, SIGNAL(started()), animate, SLOT(doWork()));
+    connect(animate, SIGNAL(done()), this, SLOT(on_Stop()));
+    connect(animate, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
+
+
 }
 
 MainWindow::~MainWindow()
 {
+    if( thread->isRunning())
+    {
+        animate->abort();
+    }
     delete serial;
     delete ui;
+}
+
+//void MainWindow::on_SpeakPhrase(int i)
+//{
+//    QString msg = text.at(i);
+//    SpeakMessage(msg);
+//}
+
+void MainWindow::on_Stop()
+{
+    ui->btnAnimate->setText("Animate");
 }
 
 void MainWindow::on_actionConfig_triggered()
@@ -45,6 +73,11 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionQuit_triggered()
 {
+    if( thread->isRunning())
+    {
+        animate->abort();
+        thread->wait();
+    }
     QApplication::quit();
 }
 
@@ -52,9 +85,10 @@ void MainWindow::on_comboBox_activated(const QString &arg1)
 {
     Robot * robot = new Robot(serial);
     robot->SetExpression(arg1);
-    QEventLoop loop;
-    QTimer::singleShot(5000, &loop, SLOT(quit()));
-    loop.exec();
+//    QEventLoop loop;
+//    QTimer::singleShot(5000, &loop, SLOT(quit()));
+//    loop.exec();
+    I::msleep(5000);
     delete robot;
 }
 
@@ -129,3 +163,20 @@ void MainWindow::on_btnRight_clicked()
     Robot robot(serial);
     robot.SetState(40, -1, 40, -1, 30, 70, 100, 100, 50, 50, 50, -1, 90);
 }
+
+void MainWindow::on_btnAnimate_clicked()
+{
+    if( thread->isRunning())
+    {
+        animate->abort();
+        thread->wait();
+        ui->btnAnimate->setText("Animate");
+    }
+    else
+    {
+        animate->requestWork();
+        ui->btnAnimate->setText("Stop Animate");
+     }
+}
+
+

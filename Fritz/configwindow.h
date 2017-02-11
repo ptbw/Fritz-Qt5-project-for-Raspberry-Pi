@@ -219,7 +219,7 @@ private slots:
 
     void on_btnCancelSave_rejected();
 
-    int TestSerial();
+    int GetVersion();
 
     //int GetVersion(QByteArray buf);
 
@@ -248,23 +248,15 @@ private:
 
     Worker *worker;
 
-    //Serial *serial;
-
     QThread *thread;
 
     QWidget *main;
 
     keyEnterReceiver* key;
 
-    //QSerialPort *arduino;
-
     CalibrationData * cd;
 
     RobotState * ss;
-
-    //bool arduino_is_available;
-
-    //bool foundBoard;
 
     int currentValue[32];
     bool currentDirection[32];

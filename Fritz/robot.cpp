@@ -86,6 +86,7 @@ void Robot::Reset()
     RobotState initState = new RobotState();
 }
 
+
 double Robot::GetSonar()
 {
      serial->SendCommand(ARDUINO_GET_SONAR, sonarOutPin, (short) sonarInPin);

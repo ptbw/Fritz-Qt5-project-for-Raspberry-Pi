@@ -70,7 +70,7 @@
 
     phono od;
     od.ipa = "ʌ";         // blood
-    od.lips = "oh";
+    od.lips = "o//on_SpeakPhrase(value);h";
     phonos.append(od);
 
     phono on;

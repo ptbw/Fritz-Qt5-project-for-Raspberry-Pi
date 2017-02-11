@@ -6,7 +6,6 @@
 #include "robot.h"
 
 #include <QMessageBox>
-//#include <QtSerialPort/QSerialPort>
 #include <QThread>
 #include <QImageReader>
 #include <QMap>
@@ -190,7 +189,9 @@ void ConfigWindow::on_btnCancelSave_rejected()
 
 void ConfigWindow::on_pushButton_clicked()
 {   
-    int version = TestSerial();
+    //int version = TestSerial();
+
+    int version = serial->GetVersion();
 
     if(version == -1)
         QMessageBox::warning(this, "Port error","Couldn't find the Arduino!");
@@ -204,7 +205,7 @@ void ConfigWindow::on_pushButton_clicked()
 
 }
 
-int ConfigWindow::TestSerial()
+int ConfigWindow::GetVersion()
 {
     int version = serial->TestSerial();    
     return version;
@@ -312,6 +313,6 @@ void ConfigWindow::on_btnTestSonar_clicked()
 {
     Robot robot(serial);
     double distance = robot.GetSonar();
-    QString msg = "Distance: " + QString::number(distance);
-    QMessageBox::information(this, "Button Pressed",msg);
+    QString msg = QString::number(distance);
+    ui->textSonar->setText(msg);
 }

@@ -226,6 +226,19 @@
      <string>Thanks</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnAnimate">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>190</y>
+      <width>321</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Animate</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -233,7 +246,7 @@
      <x>0</x>
      <y>0</y>
      <width>877</width>
-     <height>27</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
