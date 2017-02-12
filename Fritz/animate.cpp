@@ -28,6 +28,12 @@ void Animate::doWork()
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
 
+    int dir = 1;
+    int angle = 10;
+
+    robot.SetCentre();
+    robot.SetNeck(angle);
+
     bool running = true;
     while(running)
     {
@@ -42,12 +48,26 @@ void Animate::doWork()
 
         int value = (int)(qrand() % 10);
         double sonar = robot.GetSonar();
-        qWarning() << QObject::tr("SonarValue %1").arg(sonar) << endl;
-        if(sonar < 50.0)
+        if( sonar < 9999)
         {
-            QString msg = text.at(value);
-            SpeakMessage(msg);
-            I::sleep(4);
+            qWarning() << QObject::tr("SonarValue %1").arg(sonar) << endl;
+            if(sonar < 50.0)
+            {
+                QString msg = text.at(value);
+                SpeakMessage(msg);
+                I::sleep(4);
+            }
+            if(sonar > 200)
+            {
+               angle += dir;
+               if( angle >= 90 || angle <= 10 )
+               {
+                   dir = dir * -1;
+               }
+               qWarning() << QObject::tr("Angle %1").arg(angle) << endl;
+               robot.SetNeck(angle);
+               I::msleep(500);
+            }
         }
     }
     emit done();

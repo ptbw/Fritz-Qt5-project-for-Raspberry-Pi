@@ -100,6 +100,12 @@ public:
     void SetState(int n_leftHorizontalEye, int n_leftVerticalEye, int n_rightHorizontalEye, int n_rightVerticalEye, int n_leftEyebrow, int n_rightEyebrow, int n_rightEyelid, int n_leftEyelid, int n_leftLip, int n_rightLip, int n_jaw, int n_neckTilt, int n_neckTwist);
     void SetExpression(QString name);
     void SetMouth(QString shape);
+
+    void SetLeft();
+    void SetCentre();
+    void SetRight();
+    void SetNeck(int angle);
+
 };
 
 #endif // ROBOT_H

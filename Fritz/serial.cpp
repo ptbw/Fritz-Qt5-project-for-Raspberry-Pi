@@ -221,7 +221,7 @@ void Serial::handleReadyRead()
     while(arduino->bytesAvailable())
         requestData = requestData + arduino->readAll();
 
-    qWarning() << QString(requestData.toHex()) << endl;
+    //qWarning() << QString(requestData.toHex()) << endl;
 
     if(((uchar)requestData[0] & 127) == 'A')
         version = GetVersion(requestData);

@@ -248,3 +248,25 @@ void Robot::SetExpression(QString name)
     //EditState(GetFinalState());
 }
 
+//SetState(int n_leftHorizontalEye, int n_leftVerticalEye, int n_rightHorizontalEye, int n_rightVerticalEye, int n_leftEyebrow, int n_rightEyebrow, int n_rightEyelid, int n_leftEyelid, int n_leftLip, int n_rightLip, int n_jaw, int n_neckTilt, int n_neckTwist);
+void Robot::SetLeft()
+{
+    SetState(40, -1, 40, -1, 30, 70, 100, 100, 50, 50, 50, -1, 10);
+}
+
+void Robot::SetCentre()
+{
+    SetState(40, -1, 40, -1, 50, 50, 100, 100, 50, 50, 50, -1, 50);
+}
+
+void Robot::SetRight()
+{
+    SetState(40, -1, 40, -1, 30, 70, 100, 100, 50, 50, 50, -1, 90);
+}
+
+void Robot::SetNeck(int angle)
+{
+    SetState(40, -1, 40, -1, 30, 70, 100, 100, 50, 50, 50, -1, angle);
+}
+
+
