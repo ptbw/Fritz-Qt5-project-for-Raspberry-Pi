@@ -73,7 +73,7 @@ Robot::Robot(Serial *serial)
      sonarInPin = 16;
 
      // Prime the distance sensor
-     GetSonar();
+     // GetSonar();
 }
 
 Robot::~Robot()
@@ -89,7 +89,7 @@ void Robot::Reset()
 
 double Robot::GetSonar()
 {
-     serial->SendCommand(ARDUINO_GET_SONAR, sonarOutPin, (short) sonarInPin);
+     serial->SendCommand(ARDUINO_GET_SONAR, sonarOutPin, sonarInPin);
      sonarValue = serial->GetSonar();
 
      return sonarValue;

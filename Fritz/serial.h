@@ -67,6 +67,8 @@ public:
 
     double GetSonar();
 
+    void SetSonar(int outPin, int inPin);
+
     void SetServo(int pin, float value, int max, int min, int trim, bool inverted = false);
 
     void SetServo(int pin, int value);

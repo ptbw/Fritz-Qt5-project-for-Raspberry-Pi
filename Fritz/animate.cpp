@@ -50,7 +50,7 @@ void Animate::doWork()
         double sonar = robot.GetSonar();
         if( sonar < 9999)
         {
-            qWarning() << QObject::tr("SonarValue %1").arg(sonar) << endl;
+            //qWarning() << QObject::tr("SonarValue %1").arg(sonar) << endl;
             if(sonar < 50.0)
             {
                 QString msg = text.at(value);
@@ -59,7 +59,7 @@ void Animate::doWork()
             }
             if(sonar > 200)
             {
-               angle += dir;
+               angle = angle + (5 * dir);
                if( angle >= 90 || angle <= 10 )
                {
                    dir = dir * -1;
