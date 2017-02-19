@@ -94,19 +94,21 @@ void MainWindow::on_comboBox_activated(const QString &arg1)
 
 void MainWindow::SpeakMessage(QString msg)
 {
-    Speak speak;
+//    Speak speak;
+//    Robot robot(serial);
+
+//    QStringList phons = speak.TextToPhon(msg);
+//    speak.TextToSpeech(msg);
+
+//    QStringListIterator iterator(phons);
+//    while (iterator.hasNext())
+//    {
+//        QString shape = speak.GetMouthShape(iterator.next());
+//        robot.SetMouth(shape);
+//        I::msleep(10);
+//    }
     Robot robot(serial);
-
-    QStringList phons = speak.TextToPhon(msg);
-    speak.TextToSpeech(msg);
-
-    QStringListIterator iterator(phons);
-    while (iterator.hasNext())
-    {
-        QString shape = speak.GetMouthShape(iterator.next());
-        robot.SetMouth(shape);
-        I::msleep(10);
-    }
+    robot.SpeakMessage(msg);
 }
 
 void MainWindow::on_btnHello_clicked()

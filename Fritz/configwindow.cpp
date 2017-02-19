@@ -297,17 +297,26 @@ void ConfigWindow::on_btnTestSpeech_5_clicked()
     if( ui->textToSay->text() != "" )
         msg = ui->textToSay->text();
 
-    QStringList phons = speak.TextToPhon(msg);
-    speak.TextToSpeech(msg);
+    SpeakMessage(msg);
 
-    QStringListIterator iterator(phons);
-    while (iterator.hasNext())
-    {
-        QString shape = speak.GetMouthShape(iterator.next());
-        robot.SetMouth(shape);
-        I::msleep(10);
-    }
+//    QStringList phons = speak.TextToPhon(msg);
+//    speak.TextToSpeech(msg);
+
+//    QStringListIterator iterator(phons);
+//    while (iterator.hasNext())
+//    {
+//        QString shape = speak.GetMouthShape(iterator.next());
+//        robot.SetMouth(shape);
+//        I::msleep(10);
+//    }
 }
+
+void ConfigWindow::SpeakMessage(QString msg)
+{
+    Robot robot(serial);
+    robot.SpeakMessage(msg);
+}
+
 
 void ConfigWindow::on_btnTestSonar_clicked()
 {

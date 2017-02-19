@@ -269,4 +269,23 @@ void Robot::SetNeck(int angle)
     SetState(40, -1, 40, -1, 30, 70, 100, 100, 50, 50, 50, -1, angle);
 }
 
+void Robot::SpeakMessage(QString msg)
+{
+    Speak speak;
+    Robot robot(serial);
+
+    QStringList phons = speak.TextToPhon(msg);
+    speak.TextToSpeech(msg);
+
+    QStringListIterator iterator(phons);
+    while (iterator.hasNext())
+    {
+        QString shape = speak.GetMouthShape(iterator.next());
+        robot.SetMouth(shape);
+        I::msleep(60);
+    }
+
+}
+
+
 

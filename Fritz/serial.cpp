@@ -100,7 +100,8 @@ int Serial::Open()
     version = -1;
 
     connect(arduino, &QSerialPort::readyRead, this, &Serial::handleReadyRead);
-    connect(arduino, static_cast<void (QSerialPort::*)(QSerialPort::SerialPortError)>(&QSerialPort::error),this, &Serial::handleError);
+    //connect(arduino, &QSerialPort::serialPortError, this, &Serial::handleError);
+    //connect(arduino, static_cast<void (QSerialPort::*)(QSerialPort::SerialPortError)>(&QSerialPort::error),this, &Serial::handleError);
     //connect(&m_timer, &QTimer::timeout, this, &SerialPortReader::handleTimeout);
 
     TestSerial();
@@ -209,7 +210,7 @@ bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
     {
         arduino->write(sendData,9);
         arduino->waitForBytesWritten(waitTimeOut);
-        qWarning() << "Send: " << QString(sendData.toHex()) << endl;
+        //qWarning() << "Send: " << QString(sendData.toHex()) << endl;
         return true;
     }
     qWarning() << "Failed to write" << endl;
@@ -218,15 +219,18 @@ bool Serial::SendPacket(QByteArray buffer, int slen, int rlen)
 
 void Serial::handleReadyRead()
 {
-    I::msleep(500);
+    I::msleep(10);
     QByteArray requestData = arduino->readAll();
-    //while(arduino->bytesAvailable())
-    //      requestData = requestData + arduino->readAll();
+    while(arduino->bytesAvailable())
+    {
+        I::msleep(2);
+        requestData = requestData + arduino->readAll();
+    }
 
 
-    qWarning() << "Rec:  " << QString(requestData.toHex()) << endl;
+    //qWarning() << "Rec:  " << QString(requestData.toHex()) << endl;
 
-    while(requestData.length()>1)
+    while(true)
     {
         if(((uchar)requestData[0] & 127) == 'A')
         {
@@ -242,17 +246,19 @@ void Serial::handleReadyRead()
           if( dist > 0 )
               sonarValue = dist;
 
-          qWarning() << "Sonar: " << sonarValue << endl;
+          //qWarning() << "Rec:  " << QString(requestData.toHex()) << endl;
+          //qWarning() << "Sonar: " << sonarValue << endl;
           requestData.remove(0,9);
         }
         else if(((uchar)requestData[0] & 127) == ARDUINO_SET_SERVO)
         {
-          int x = ((int)requestData[3] | (requestData[4] << 7));
-          qWarning() << "Servo: " << x << endl;
           requestData.remove(0,9);
         }
         else
           requestData.remove(0,9);
+
+        if(requestData.length()<9)
+            break;
      }
 }
 
@@ -357,8 +363,8 @@ bool Serial::SendPacketOld(QByteArray buffer, int slen, int rlen)
         {
             // read request
             requestData = arduino->readAll();
-            while (arduino->waitForReadyRead(100))
-                requestData += arduino->readAll();
+            //while (arduino->waitForReadyRead(100))
+                //requestData += arduino->readAll();
 
             if(((uchar)requestData[0] & 127) == ARDUINO_GET_SONAR)
             {

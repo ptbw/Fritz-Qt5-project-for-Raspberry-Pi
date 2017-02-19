@@ -47,28 +47,32 @@ void Animate::doWork()
         }
 
         int value = (int)(qrand() % 10);
+        mutex.lock();
         double sonar = robot.GetSonar();
-        if( sonar < 9999)
-        {
-            //qWarning() << QObject::tr("SonarValue %1").arg(sonar) << endl;
-            if(sonar < 50.0)
-            {
-                QString msg = text.at(value);
-                SpeakMessage(msg);
-                I::sleep(4);
-            }
-            if(sonar > 200)
-            {
-               angle = angle + (5 * dir);
-               if( angle >= 90 || angle <= 10 )
-               {
-                   dir = dir * -1;
-               }
-               qWarning() << QObject::tr("Angle %1").arg(angle) << endl;
-               robot.SetNeck(angle);
-               I::msleep(500);
-            }
-        }
+        qWarning() << "Sonar: " << sonar << endl;
+        mutex.unlock();
+
+//        if( sonar < 9999)
+//        {
+//            //qWarning() << QObject::tr("SonarValue %1").arg(sonar) << endl;
+//            if(sonar < 50.0)
+//            {
+//                QString msg = text.at(value);
+//                SpeakMessage(msg);
+//                I::sleep(10);
+//            }
+//            if(sonar > 200)
+//            {
+//               angle = angle + (5 * dir);
+//               if( angle >= 90 || angle <= 10 )
+//               {
+//                   dir = dir * -1;
+//               }
+//               //qWarning() << QObject::tr("Angle %1").arg(angle) << endl;
+//               robot.SetNeck(angle);
+//               I::msleep(500);
+//            }
+//        }
     }
     emit done();
     emit finished();

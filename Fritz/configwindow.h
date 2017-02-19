@@ -239,6 +239,8 @@ private slots:
 
     void on_btnTestSonar_clicked();
 
+    void SpeakMessage(QString msg);
+
 private:
     void SetServo(int pin, float value, int max, int min, int trim, bool inverted = false);
     void SetServo(int pin, int value);

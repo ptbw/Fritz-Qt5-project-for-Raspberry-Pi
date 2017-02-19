@@ -37,7 +37,7 @@ private:
 
     int version;
 
-    static const int waitTimeOut = 500;
+    static const int waitTimeOut = 50;
 
 public:
 

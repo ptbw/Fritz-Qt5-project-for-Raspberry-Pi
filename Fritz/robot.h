@@ -3,6 +3,8 @@
 
 #include "serial.h"
 #include "configwindow.h"
+#include "speak.h"
+#include "i.h"
 
 class Robot
 {
@@ -105,6 +107,8 @@ public:
     void SetCentre();
     void SetRight();
     void SetNeck(int angle);
+
+    void SpeakMessage(QString msg);
 
 };
 
