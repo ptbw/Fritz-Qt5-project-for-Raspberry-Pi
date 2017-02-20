@@ -2,6 +2,7 @@
 #include "robot.h"
 #include "i.h"
 #include "speak.h"
+#include <QProcess>
 
 Animate::Animate(Serial *serial) :
     QObject(0)
@@ -23,6 +24,60 @@ Animate::Animate(Serial *serial) :
 }
 
 void Animate::doWork()
+{
+    int dir = 1;
+    int angle = 10;
+
+    _working = false;
+    _abort = false;
+
+    double sonar = 0;
+    bool running = true;
+    Robot robot(_serial);
+
+    robot.SetCentre();
+    I::msleep(500);
+
+
+    while(running)
+    {
+        mutex.lock();
+        sonar = robot.GetSonar();
+        qWarning() << "Sonar: " << sonar << endl;
+        running = !_abort;
+        mutex.unlock();
+        I::msleep(100);
+
+
+        if(sonar <= 100)
+        {
+            mutex.lock();
+            QString command = "fortune cookies.txt";
+            QProcess process;
+            process.start(command);
+            process.waitForFinished();
+            QString output(process.readAllStandardOutput());
+            SpeakMessage(output);
+            mutex.unlock();
+            I::msleep(500);
+        }
+        if(sonar > 100)
+        {
+           angle = angle + (5 * dir);
+           if( angle >= 90 || angle <= 10 )
+           {
+               dir = dir * -1;
+           }
+           qWarning() << QObject::tr("Angle %1").arg(angle) << endl;
+           robot.SetNeck(angle);
+           //I::msleep(100);
+        }
+     }
+    emit done();
+    emit finished();
+}
+
+void Animate::doWorkOld()
 {
     Robot robot(_serial);
     QTime time = QTime::currentTime();
@@ -52,27 +107,27 @@ void Animate::doWork()
         qWarning() << "Sonar: " << sonar << endl;
         mutex.unlock();
 
-//        if( sonar < 9999)
-//        {
-//            //qWarning() << QObject::tr("SonarValue %1").arg(sonar) << endl;
-//            if(sonar < 50.0)
-//            {
-//                QString msg = text.at(value);
-//                SpeakMessage(msg);
-//                I::sleep(10);
-//            }
-//            if(sonar > 200)
-//            {
-//               angle = angle + (5 * dir);
-//               if( angle >= 90 || angle <= 10 )
-//               {
-//                   dir = dir * -1;
-//               }
-//               //qWarning() << QObject::tr("Angle %1").arg(angle) << endl;
-//               robot.SetNeck(angle);
-//               I::msleep(500);
-//            }
-//        }
+        if( sonar < 9999)
+        {
+            //qWarning() << QObject::tr("SonarValue %1").arg(sonar) << endl;
+            if(sonar < 50.0)
+            {
+                QString msg = text.at(value);
+                SpeakMessage(msg);
+                I::sleep(10);
+            }
+            if(sonar > 200)
+            {
+               angle = angle + (5 * dir);
+               if( angle >= 90 || angle <= 10 )
+               {
+                   dir = dir * -1;
+               }
+               //qWarning() << QObject::tr("Angle %1").arg(angle) << endl;
+               robot.SetNeck(angle);
+               I::msleep(500);
+            }
+        }
     }
     emit done();
     emit finished();
@@ -107,13 +162,12 @@ void Animate::requestWork()
 
 void Animate::abort()
 {
-    if (_working) {
+    //if (_working) {
         mutex.lock();
         _working = false;
         _abort = true;
         mutex.unlock();
-        qDebug()<<"Request worker aborting in Thread "<<thread()->currentThreadId();
-    }
+    //}
 }
 
 

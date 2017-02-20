@@ -439,7 +439,7 @@
        <bool>true</bool>
       </property>
       <property name="currentText">
-       <string notr="true">/dev/ttyACM0</string>
+       <string notr="true">/dev/ttyUSB0</string>
       </property>
       <item>
        <property name="text">
@@ -1415,7 +1415,7 @@
     <item>
      <widget class="QLineEdit" name="rightVerticalEyeMin">
       <property name="text">
-       <string>-100</string>
+       <string>-300</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -36,6 +36,7 @@ signals:
 
 public slots:
     void doWork();
+    void doWorkOld();
 };
 
 

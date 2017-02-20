@@ -38,7 +38,7 @@ Robot::Robot(Serial *serial)
      rightHorizontalEyeMin = -629;
      rightHorizontalEyeMax = 270;
      rightHorizontalEyePin = 9;
-     rightVerticalEyeMin = -100;
+     rightVerticalEyeMin = -300;
      rightVerticalEyeMax = 100;
      rightVerticalEyePin = 10;
      leftLipMin = -850;
@@ -224,7 +224,7 @@ void Robot::SetExpression(QString name)
     else if (name == "Happy")
         SetState(63 /*leftHorizontalEye*/, 56 /*leftVerticalEye*/, 50 /*rightHorizontalEye*/, 56 /*rightVerticalEye*/, 76 /*leftEyebrow*/, 66 /*rightEyebrow*/, 40 /*rightEyelid*/, 40 /*leftEyelid*/, 5 /*leftLip*/, 95 /*rightLip*/, 10 /*jaw*/, 50 /*neckTilt*/, -1 /*neckTwist*/);
     else if (name == "Neutral")
-        SetState(50 /*leftHorizontalEye*/, 50 /*leftVerticalEye*/, 50 /*rightHorizontalEye*/, 50 /*rightVerticalEye*/, 50 /*leftEyebrow*/, 50 /*rightEyebrow*/, 50 /*rightEyelid*/, 50 /*leftEyelid*/, 50 /*leftLip*/, 50 /*rightLip*/, 0 /*jaw*/, 50 /*neckTilt*/, -1 /*neckTwist*/);
+        SetState(50 /*leftHorizontalEye*/, 50 /*leftVerticalEye*/, 60 /* 50 rightHorizontalEye*/, 10 /* 50 rightVerticalEye*/, 50 /*leftEyebrow*/, 50 /*rightEyebrow*/, 50 /*rightEyelid*/, 50 /*leftEyelid*/, 50 /*leftLip*/, 50 /*rightLip*/, 0 /*jaw*/, 50 /*neckTilt*/, -1 /*neckTwist*/);
     else if (name == "Sad")
         SetState(56 /*leftHorizontalEye*/, 64 /*leftVerticalEye*/, 56 /*rightHorizontalEye*/, 64 /*rightVerticalEye*/, 10 /*leftEyebrow*/, 90 /*rightEyebrow*/, 57 /*rightEyelid*/, 57 /*leftEyelid*/, 95 /*leftLip*/, 5 /*rightLip*/, 90 /*jaw*/, 50 /*neckTilt*/, -1 /*neckTwist*/);
     else if (name == "Sinister")

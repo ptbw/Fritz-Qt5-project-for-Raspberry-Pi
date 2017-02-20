@@ -29,13 +29,18 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(animate, SIGNAL(done()), this, SLOT(on_Stop()));
     connect(animate, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
 
+    Robot robot(serial);
+    robot.SetExpression("Neutral");
 
+    animationRunning = false;
 }
 
 MainWindow::~MainWindow()
 {
-    if( thread->isRunning())
+    if(animationRunning)
     {
+        ui->btnAnimate->setText("Animate");
+        animationRunning = false;
         animate->abort();
     }
     delete serial;
@@ -73,40 +78,24 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionQuit_triggered()
 {
-    if( thread->isRunning())
+    if(animationRunning)
     {
+        ui->btnAnimate->setText("Animate");
+        animationRunning = false;
         animate->abort();
-        thread->wait();
     }
     QApplication::quit();
 }
 
 void MainWindow::on_comboBox_activated(const QString &arg1)
 {
-    Robot * robot = new Robot(serial);
-    robot->SetExpression(arg1);
-//    QEventLoop loop;
-//    QTimer::singleShot(5000, &loop, SLOT(quit()));
-//    loop.exec();
-    I::msleep(5000);
-    delete robot;
+    Robot robot(serial);
+    robot.SetExpression(arg1);
+    I::msleep(5000); 
 }
 
 void MainWindow::SpeakMessage(QString msg)
 {
-//    Speak speak;
-//    Robot robot(serial);
-
-//    QStringList phons = speak.TextToPhon(msg);
-//    speak.TextToSpeech(msg);
-
-//    QStringListIterator iterator(phons);
-//    while (iterator.hasNext())
-//    {
-//        QString shape = speak.GetMouthShape(iterator.next());
-//        robot.SetMouth(shape);
-//        I::msleep(10);
-//    }
     Robot robot(serial);
     robot.SpeakMessage(msg);
 }
@@ -125,8 +114,8 @@ void MainWindow::on_btnAsk_clicked()
 
 void MainWindow::on_btnFortune_clicked()
 {
-    // QString command = "fortune cookies.txt";
-    QString command = "fortune -s";
+    QString command = "fortune cookies.txt";
+    //QString command = "fortune -s";
 
     QProcess process;
     process.start(command);
@@ -168,16 +157,28 @@ void MainWindow::on_btnRight_clicked()
 
 void MainWindow::on_btnAnimate_clicked()
 {
-    if( thread->isRunning())
-    {
-        animate->abort();
-        thread->wait();
-        ui->btnAnimate->setText("Animate");
-    }
-    else
-    {
-        animate->requestWork();
-        ui->btnAnimate->setText("Stop Animate");
+//    if( thread->isRunning())
+//    {
+//        animate->abort();
+//        thread->wait();
+//        ui->btnAnimate->setText("Animate");
+//    }
+//    else
+//    {
+//        animate->requestWork();
+//        ui->btnAnimate->setText("Stop Animate");
+//     }
+     if(animationRunning)
+     {
+         ui->btnAnimate->setText("Animate");
+         animationRunning = false;
+         animate->abort();
+     }
+     else
+     {
+         ui->btnAnimate->setText("Stop Animate");
+         animationRunning = true;
+         animate->doWork();
      }
 }
 

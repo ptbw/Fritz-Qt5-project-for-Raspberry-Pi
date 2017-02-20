@@ -93,6 +93,8 @@ private:
 
     QThread *thread;
 
+    bool animationRunning;
+
 };
 
 #endif // MAINWINDOW_H
