@@ -110,6 +110,8 @@ public:
 
     void SpeakMessage(QString msg);
 
+    void SpeakWord(QString word);
+
 };
 
 #endif // ROBOT_H

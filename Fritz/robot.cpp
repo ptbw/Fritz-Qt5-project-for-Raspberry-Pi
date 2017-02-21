@@ -271,6 +271,17 @@ void Robot::SetNeck(int angle)
 
 void Robot::SpeakMessage(QString msg)
 {
+    QStringList words = msg.split(",",QString::SkipEmptyParts);
+    QStringListIterator iterator(words);
+    while (iterator.hasNext())
+    {
+       SpeakWord(iterator.next());
+       I::msleep(100);
+    }
+}
+
+void Robot::SpeakWord(QString msg)
+{
     Speak speak;
     Robot robot(serial);
 
@@ -284,8 +295,6 @@ void Robot::SpeakMessage(QString msg)
         robot.SetMouth(shape);
         I::msleep(60);
     }
-
 }
-
 
 
