@@ -112,6 +112,16 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QLineEdit" name="leftEyebrowMax">
+      <property name="text">
+       <string>292</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="layoutWidget">
@@ -165,6 +175,9 @@
      <widget class="QCheckBox" name="leftEyebrowTest">
       <property name="text">
        <string>Test</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -269,16 +282,6 @@
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_5">
-    <item>
-     <widget class="QLineEdit" name="leftEyebrowMax">
-      <property name="text">
-       <string>292</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
     <item>
      <widget class="QLabel" name="label_9">
       <property name="text">
